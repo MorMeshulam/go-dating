@@ -1,0 +1,1202 @@
+{
+  "version": "1.0.0",
+  "entity": "profile_question_bank",
+  "product": {
+    "name": {
+      "en": "Anonymous Match",
+      "he": "Anonymous Match"
+    },
+    "summary": {
+      "en": "Bilingual onboarding configuration for an anonymous, premium dating platform powered by AI and human matchmaking.",
+      "he": "תצורת אונבורדינג דו-לשונית לפלטפורמת היכרויות אנונימית ופרימיום, המונעת על ידי AI והתאמה אנושית."
+    }
+  },
+  "supportedLocales": [
+    "en",
+    "he"
+  ],
+  "sections": [
+    {
+      "id": "identity_basics",
+      "title": {
+        "en": "Identity Basics",
+        "he": "פרטי זהות בסיסיים"
+      },
+      "description": {
+        "en": "Public-facing basics that help a member appear real without exposing too much too early.",
+        "he": "פרטים בסיסיים גלויים שעוזרים לחבר או חברה להיראות אמיתיים בלי לחשוף יותר מדי מוקדם מדי."
+      }
+    },
+    {
+      "id": "attraction_preferences",
+      "title": {
+        "en": "Attraction Preferences",
+        "he": "העדפות משיכה"
+      },
+      "description": {
+        "en": "Who the member is open to and what kind of match they want the engine to prioritize.",
+        "he": "למי המשתמש או המשתמשת פתוחים ואיזה סוג התאמה מנוע ההתאמה צריך להעדיף."
+      }
+    },
+    {
+      "id": "relationship_intent",
+      "title": {
+        "en": "Relationship Intent",
+        "he": "כוונת קשר"
+      },
+      "description": {
+        "en": "Signals about seriousness, pace, and emotional readiness.",
+        "he": "איתותים על רצינות, קצב ומוכנות רגשית."
+      }
+    },
+    {
+      "id": "values_and_lifestyle",
+      "title": {
+        "en": "Values and Lifestyle",
+        "he": "ערכים ואורח חיים"
+      },
+      "description": {
+        "en": "Compatibility factors that matter after attraction and before a real date is set.",
+        "he": "גורמי התאמה שחשובים אחרי משיכה ולפני שקובעים דייט אמיתי."
+      }
+    },
+    {
+      "id": "personality_and_communication",
+      "title": {
+        "en": "Personality and Communication",
+        "he": "אישיות ותקשורת"
+      },
+      "description": {
+        "en": "How the member connects, communicates, and shows up in a relationship.",
+        "he": "איך המשתמש או המשתמשת מתחברים, מתקשרים ומביאים את עצמם לקשר."
+      }
+    },
+    {
+      "id": "boundaries_and_privacy",
+      "title": {
+        "en": "Boundaries and Privacy",
+        "he": "גבולות ופרטיות"
+      },
+      "description": {
+        "en": "The privacy model is part of the product value, so it must be configurable and explicit.",
+        "he": "מודל הפרטיות הוא חלק מהערך של המוצר, ולכן הוא חייב להיות מוגדר וברור."
+      }
+    },
+    {
+      "id": "date_preferences",
+      "title": {
+        "en": "Date Preferences",
+        "he": "העדפות לדייט"
+      },
+      "description": {
+        "en": "Preferences for the first meeting once a match is mutually approved.",
+        "he": "העדפות למפגש ראשון אחרי שההתאמה אושרה הדדית."
+      }
+    },
+    {
+      "id": "trust_and_verification",
+      "title": {
+        "en": "Trust and Verification",
+        "he": "אמון ואימות"
+      },
+      "description": {
+        "en": "Private trust signals that support safer matching without removing anonymity.",
+        "he": "איתותי אמון פרטיים שתומכים בהתאמה בטוחה יותר בלי לבטל את האנונימיות."
+      }
+    }
+  ],
+  "questions": [
+    {
+      "id": "profile_alias",
+      "sectionId": "identity_basics",
+      "type": "single_select",
+      "required": true,
+      "matchingWeight": "low",
+      "visibility": "public_masked",
+      "prompt": {
+        "en": "Choose a profile alias",
+        "he": "בחר/י כינוי לפרופיל"
+      },
+      "helpText": {
+        "en": "This is the name shown before a mutual reveal.",
+        "he": "זהו השם שיוצג לפני חשיפה הדדית."
+      },
+      "answers": [
+        {
+          "id": "north_echo",
+          "label": {
+            "en": "North Echo",
+            "he": "הד צפוני"
+          }
+        },
+        {
+          "id": "cedar_bloom",
+          "label": {
+            "en": "Cedar Bloom",
+            "he": "פריחת ארז"
+          }
+        },
+        {
+          "id": "blue_atlas",
+          "label": {
+            "en": "Blue Atlas",
+            "he": "אטלס כחול"
+          }
+        },
+        {
+          "id": "velvet_dawn",
+          "label": {
+            "en": "Velvet Dawn",
+            "he": "שחר קטיפתי"
+          }
+        }
+      ]
+    },
+    {
+      "id": "age_band",
+      "sectionId": "identity_basics",
+      "type": "single_select",
+      "required": true,
+      "matchingWeight": "high",
+      "visibility": "public_masked",
+      "prompt": {
+        "en": "Which age band fits you best?",
+        "he": "איזו קבוצת גיל הכי מתאימה לך?"
+      },
+      "answers": [
+        {
+          "id": "22_28",
+          "label": {
+            "en": "22-28",
+            "he": "22-28"
+          }
+        },
+        {
+          "id": "29_35",
+          "label": {
+            "en": "29-35",
+            "he": "29-35"
+          }
+        },
+        {
+          "id": "36_42",
+          "label": {
+            "en": "36-42",
+            "he": "36-42"
+          }
+        },
+        {
+          "id": "43_50",
+          "label": {
+            "en": "43-50",
+            "he": "43-50"
+          }
+        },
+        {
+          "id": "51_plus",
+          "label": {
+            "en": "51+",
+            "he": "51+"
+          }
+        }
+      ]
+    },
+    {
+      "id": "gender_identity",
+      "sectionId": "identity_basics",
+      "type": "single_select",
+      "required": true,
+      "matchingWeight": "high",
+      "visibility": "public_masked",
+      "prompt": {
+        "en": "How do you identify?",
+        "he": "איך את/ה מגדיר/ה את עצמך?"
+      },
+      "answers": [
+        {
+          "id": "woman",
+          "label": {
+            "en": "Woman",
+            "he": "אישה"
+          }
+        },
+        {
+          "id": "man",
+          "label": {
+            "en": "Man",
+            "he": "גבר"
+          }
+        },
+        {
+          "id": "non_binary",
+          "label": {
+            "en": "Non-binary",
+            "he": "א-בינארי/ת"
+          }
+        },
+        {
+          "id": "genderfluid",
+          "label": {
+            "en": "Genderfluid",
+            "he": "ג'נדרפלואיד"
+          }
+        },
+        {
+          "id": "prefer_self_describe",
+          "label": {
+            "en": "Prefer to self-describe later",
+            "he": "מעדיפ/ה לתאר בהמשך"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pronouns",
+      "sectionId": "identity_basics",
+      "type": "single_select",
+      "required": false,
+      "matchingWeight": "low",
+      "visibility": "shown_after_mutual_approval",
+      "prompt": {
+        "en": "Which pronouns should we use?",
+        "he": "באילו כינויי גוף נשתמש?"
+      },
+      "answers": [
+        {
+          "id": "she_her",
+          "label": {
+            "en": "She / her",
+            "he": "היא / אותה"
+          }
+        },
+        {
+          "id": "he_him",
+          "label": {
+            "en": "He / him",
+            "he": "הוא / אותו"
+          }
+        },
+        {
+          "id": "they_them",
+          "label": {
+            "en": "They / them",
+            "he": "הם/ן"
+          }
+        },
+        {
+          "id": "ask_me",
+          "label": {
+            "en": "Ask me first",
+            "he": "שאלו אותי קודם"
+          }
+        }
+      ]
+    },
+    {
+      "id": "seeking_genders",
+      "sectionId": "attraction_preferences",
+      "type": "multi_select",
+      "required": true,
+      "maxSelections": 4,
+      "matchingWeight": "high",
+      "visibility": "internal_matching_only",
+      "prompt": {
+        "en": "Who are you open to dating?",
+        "he": "עם מי את/ה פתוח/ה לצאת?"
+      },
+      "answers": [
+        {
+          "id": "seek_women",
+          "label": {
+            "en": "Women",
+            "he": "נשים"
+          }
+        },
+        {
+          "id": "seek_men",
+          "label": {
+            "en": "Men",
+            "he": "גברים"
+          }
+        },
+        {
+          "id": "seek_non_binary",
+          "label": {
+            "en": "Non-binary people",
+            "he": "א-בינאריים/ות"
+          }
+        },
+        {
+          "id": "seek_genderfluid",
+          "label": {
+            "en": "Genderfluid people",
+            "he": "ג'נדרפלואידים/ות"
+          }
+        },
+        {
+          "id": "seek_open_all",
+          "label": {
+            "en": "Open to all",
+            "he": "פתוח/ה לכולם"
+          }
+        }
+      ]
+    },
+    {
+      "id": "preferred_partner_age_band",
+      "sectionId": "attraction_preferences",
+      "type": "multi_select",
+      "required": true,
+      "maxSelections": 5,
+      "matchingWeight": "medium",
+      "visibility": "internal_matching_only",
+      "prompt": {
+        "en": "Which age bands are you comfortable matching with?",
+        "he": "עם אילו קבוצות גיל נוח לך להתאים?"
+      },
+      "answers": [
+        {
+          "id": "pref_22_28",
+          "label": {
+            "en": "22-28",
+            "he": "22-28"
+          }
+        },
+        {
+          "id": "pref_29_35",
+          "label": {
+            "en": "29-35",
+            "he": "29-35"
+          }
+        },
+        {
+          "id": "pref_36_42",
+          "label": {
+            "en": "36-42",
+            "he": "36-42"
+          }
+        },
+        {
+          "id": "pref_43_50",
+          "label": {
+            "en": "43-50",
+            "he": "43-50"
+          }
+        },
+        {
+          "id": "pref_51_plus",
+          "label": {
+            "en": "51+",
+            "he": "51+"
+          }
+        }
+      ]
+    },
+    {
+      "id": "distance_preference",
+      "sectionId": "attraction_preferences",
+      "type": "single_select",
+      "required": true,
+      "matchingWeight": "medium",
+      "visibility": "internal_matching_only",
+      "prompt": {
+        "en": "How far are you willing to travel for a match?",
+        "he": "כמה רחוק את/ה מוכן/ה לנסוע בשביל התאמה?"
+      },
+      "answers": [
+        {
+          "id": "same_city",
+          "label": {
+            "en": "Same city only",
+            "he": "רק אותה עיר"
+          }
+        },
+        {
+          "id": "metro_area",
+          "label": {
+            "en": "Metro area",
+            "he": "אזור מטרופולין"
+          }
+        },
+        {
+          "id": "up_to_hour",
+          "label": {
+            "en": "Up to one hour away",
+            "he": "עד שעה נסיעה"
+          }
+        },
+        {
+          "id": "long_distance_open",
+          "label": {
+            "en": "Open to long-distance if the fit is strong",
+            "he": "פתוח/ה למרחק אם ההתאמה חזקה"
+          }
+        }
+      ]
+    },
+    {
+      "id": "relationship_goal",
+      "sectionId": "relationship_intent",
+      "type": "multi_select",
+      "required": true,
+      "maxSelections": 3,
+      "matchingWeight": "high",
+      "visibility": "shown_before_match",
+      "prompt": {
+        "en": "What are you looking for right now?",
+        "he": "מה את/ה מחפש/ת עכשיו?"
+      },
+      "answers": [
+        {
+          "id": "goal_long_term",
+          "label": {
+            "en": "Long-term partner",
+            "he": "קשר לטווח ארוך"
+          }
+        },
+        {
+          "id": "goal_marriage",
+          "label": {
+            "en": "Marriage-minded relationship",
+            "he": "קשר עם כוונה לנישואים"
+          }
+        },
+        {
+          "id": "goal_slow_burn",
+          "label": {
+            "en": "Slow-burn dating",
+            "he": "היכרות בקצב איטי"
+          }
+        },
+        {
+          "id": "goal_exploring",
+          "label": {
+            "en": "Exploring connection",
+            "he": "בדיקת חיבור"
+          }
+        },
+        {
+          "id": "goal_high_touch_matchmaker",
+          "label": {
+            "en": "Matchmaker-supported experience",
+            "he": "חוויה עם ליווי של שדכן/ית"
+          }
+        }
+      ]
+    },
+    {
+      "id": "dating_pace",
+      "sectionId": "relationship_intent",
+      "type": "single_select",
+      "required": true,
+      "matchingWeight": "high",
+      "visibility": "shown_before_match",
+      "prompt": {
+        "en": "What pace feels right for you?",
+        "he": "איזה קצב מרגיש לך נכון?"
+      },
+      "answers": [
+        {
+          "id": "pace_deliberate",
+          "label": {
+            "en": "Deliberate and careful",
+            "he": "שקול ואיטי"
+          }
+        },
+        {
+          "id": "pace_open_but_careful",
+          "label": {
+            "en": "Open but careful",
+            "he": "פתוח/ה אבל זהיר/ה"
+          }
+        },
+        {
+          "id": "pace_ready_soon",
+          "label": {
+            "en": "Ready to move soon if the fit is strong",
+            "he": "מוכן/ה להתקדם מהר אם ההתאמה טובה"
+          }
+        }
+      ]
+    },
+    {
+      "id": "emotional_readiness",
+      "sectionId": "relationship_intent",
+      "type": "single_select",
+      "required": true,
+      "matchingWeight": "medium",
+      "visibility": "internal_matching_only",
+      "prompt": {
+        "en": "How emotionally ready do you feel for a real relationship?",
+        "he": "עד כמה את/ה מרגיש/ה מוכן/ה רגשית לקשר אמיתי?"
+      },
+      "answers": [
+        {
+          "id": "ready_now",
+          "label": {
+            "en": "Ready now",
+            "he": "מוכן/ה עכשיו"
+          }
+        },
+        {
+          "id": "warming_up",
+          "label": {
+            "en": "Open and warming up",
+            "he": "פתוח/ה ונכנס/ת לזה"
+          }
+        },
+        {
+          "id": "prefer_slow_reentry",
+          "label": {
+            "en": "Prefer a slow re-entry",
+            "he": "מעדיפ/ה חזרה איטית"
+          }
+        }
+      ]
+    },
+    {
+      "id": "top_values",
+      "sectionId": "values_and_lifestyle",
+      "type": "multi_select",
+      "required": true,
+      "maxSelections": 5,
+      "matchingWeight": "high",
+      "visibility": "shown_before_match",
+      "prompt": {
+        "en": "Which values matter most to you in a partner?",
+        "he": "אילו ערכים הכי חשובים לך בפרטנר/ית?"
+      },
+      "answers": [
+        {
+          "id": "value_honesty",
+          "label": {
+            "en": "Honesty",
+            "he": "כנות"
+          }
+        },
+        {
+          "id": "value_ambition",
+          "label": {
+            "en": "Ambition",
+            "he": "שאפתנות"
+          }
+        },
+        {
+          "id": "value_family",
+          "label": {
+            "en": "Family energy",
+            "he": "משפחתיות"
+          }
+        },
+        {
+          "id": "value_spiritual",
+          "label": {
+            "en": "Spiritual depth",
+            "he": "עומק רוחני"
+          }
+        },
+        {
+          "id": "value_adventure",
+          "label": {
+            "en": "Adventure",
+            "he": "הרפתקנות"
+          }
+        },
+        {
+          "id": "value_calm_communication",
+          "label": {
+            "en": "Calm communication",
+            "he": "תקשורת רגועה"
+          }
+        },
+        {
+          "id": "value_kindness",
+          "label": {
+            "en": "Kindness",
+            "he": "אדיבות"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lifestyle_rhythm",
+      "sectionId": "values_and_lifestyle",
+      "type": "single_select",
+      "required": false,
+      "matchingWeight": "medium",
+      "visibility": "shown_after_mutual_approval",
+      "prompt": {
+        "en": "Which lifestyle rhythm sounds most like you?",
+        "he": "איזה קצב חיים הכי דומה לך?"
+      },
+      "answers": [
+        {
+          "id": "rhythm_home_grounded",
+          "label": {
+            "en": "Grounded and home-oriented",
+            "he": "יציב/ה וביתי/ת"
+          }
+        },
+        {
+          "id": "rhythm_social_balanced",
+          "label": {
+            "en": "Balanced between social and quiet",
+            "he": "מאוזן/ת בין חברה לשקט"
+          }
+        },
+        {
+          "id": "rhythm_city_active",
+          "label": {
+            "en": "City-active and always moving",
+            "he": "עירוני/ת ואקטיבי/ת"
+          }
+        },
+        {
+          "id": "rhythm_flexible",
+          "label": {
+            "en": "Flexible depending on the season",
+            "he": "גמיש/ה לפי התקופה"
+          }
+        }
+      ]
+    },
+    {
+      "id": "children_family_outlook",
+      "sectionId": "values_and_lifestyle",
+      "type": "single_select",
+      "required": false,
+      "matchingWeight": "high",
+      "visibility": "internal_matching_only",
+      "prompt": {
+        "en": "How do you feel about children and family-building?",
+        "he": "איך את/ה מרגיש/ה לגבי ילדים ובניית משפחה?"
+      },
+      "answers": [
+        {
+          "id": "family_yes_soon",
+          "label": {
+            "en": "Important to me soon",
+            "he": "חשוב לי בזמן הקרוב"
+          }
+        },
+        {
+          "id": "family_yes_later",
+          "label": {
+            "en": "Important to me later",
+            "he": "חשוב לי בהמשך"
+          }
+        },
+        {
+          "id": "family_open_discuss",
+          "label": {
+            "en": "Open to discussion",
+            "he": "פתוח/ה לשיחה"
+          }
+        },
+        {
+          "id": "family_not_part_of_plan",
+          "label": {
+            "en": "Not part of my plan",
+            "he": "לא חלק מהתכנית שלי"
+          }
+        }
+      ]
+    },
+    {
+      "id": "conversation_style",
+      "sectionId": "personality_and_communication",
+      "type": "multi_select",
+      "required": true,
+      "maxSelections": 3,
+      "matchingWeight": "medium",
+      "visibility": "shown_before_match",
+      "prompt": {
+        "en": "How do you usually connect in conversation?",
+        "he": "איך את/ה בדרך כלל מתחבר/ת בשיחה?"
+      },
+      "answers": [
+        {
+          "id": "conv_direct",
+          "label": {
+            "en": "Direct and clear",
+            "he": "ישיר/ה וברור/ה"
+          }
+        },
+        {
+          "id": "conv_playful",
+          "label": {
+            "en": "Playful and light",
+            "he": "שובב/ה וקליל/ה"
+          }
+        },
+        {
+          "id": "conv_deep",
+          "label": {
+            "en": "Deep and reflective",
+            "he": "עמוק/ה ומהורהר/ת"
+          }
+        },
+        {
+          "id": "conv_warm",
+          "label": {
+            "en": "Warm and emotionally present",
+            "he": "חם/ה ונוכח/ת רגשית"
+          }
+        },
+        {
+          "id": "conv_slow_opening",
+          "label": {
+            "en": "I open up slowly",
+            "he": "אני נפתח/ת לאט"
+          }
+        }
+      ]
+    },
+    {
+      "id": "social_energy",
+      "sectionId": "personality_and_communication",
+      "type": "single_select",
+      "required": false,
+      "matchingWeight": "medium",
+      "visibility": "shown_after_mutual_approval",
+      "prompt": {
+        "en": "Where do you get your energy from?",
+        "he": "מאיפה את/ה מקבל/ת אנרגיה?"
+      },
+      "answers": [
+        {
+          "id": "energy_introvert",
+          "label": {
+            "en": "Quiet one-on-one spaces",
+            "he": "מקומות שקטים ואחד-על-אחד"
+          }
+        },
+        {
+          "id": "energy_ambivert",
+          "label": {
+            "en": "A healthy mix of both",
+            "he": "שילוב בריא של שניהם"
+          }
+        },
+        {
+          "id": "energy_extrovert",
+          "label": {
+            "en": "People, movement, and social energy",
+            "he": "אנשים, תנועה ואנרגיה חברתית"
+          }
+        }
+      ]
+    },
+    {
+      "id": "love_language",
+      "sectionId": "personality_and_communication",
+      "type": "multi_select",
+      "required": false,
+      "maxSelections": 2,
+      "matchingWeight": "low",
+      "visibility": "shown_after_mutual_approval",
+      "prompt": {
+        "en": "Which love languages feel most natural to you?",
+        "he": "אילו שפות אהבה מרגישות לך הכי טבעיות?"
+      },
+      "answers": [
+        {
+          "id": "love_words",
+          "label": {
+            "en": "Words of affirmation",
+            "he": "מילים מחזקות"
+          }
+        },
+        {
+          "id": "love_time",
+          "label": {
+            "en": "Quality time",
+            "he": "זמן איכות"
+          }
+        },
+        {
+          "id": "love_touch",
+          "label": {
+            "en": "Physical affection",
+            "he": "מגע וחיבה"
+          }
+        },
+        {
+          "id": "love_service",
+          "label": {
+            "en": "Acts of service",
+            "he": "מעשים של אכפתיות"
+          }
+        },
+        {
+          "id": "love_gifts",
+          "label": {
+            "en": "Thoughtful gifts",
+            "he": "מתנות עם מחשבה"
+          }
+        }
+      ]
+    },
+    {
+      "id": "hard_boundaries",
+      "sectionId": "boundaries_and_privacy",
+      "type": "multi_select",
+      "required": true,
+      "maxSelections": 5,
+      "matchingWeight": "high",
+      "visibility": "internal_matching_only",
+      "prompt": {
+        "en": "Which boundaries are non-negotiable for you?",
+        "he": "אילו גבולות הם מבחינתך לא פתוחים למשא ומתן?"
+      },
+      "answers": [
+        {
+          "id": "boundary_no_hookup_pressure",
+          "label": {
+            "en": "No hookup pressure",
+            "he": "בלי לחץ לכיוון מיני"
+          }
+        },
+        {
+          "id": "boundary_no_last_minute",
+          "label": {
+            "en": "No last-minute plans",
+            "he": "בלי תוכניות ברגע האחרון"
+          }
+        },
+        {
+          "id": "boundary_respect_pace",
+          "label": {
+            "en": "Respect my pace",
+            "he": "לכבד את הקצב שלי"
+          }
+        },
+        {
+          "id": "boundary_no_socials_first",
+          "label": {
+            "en": "No direct social accounts at first",
+            "he": "בלי רשתות חברתיות בשלב ראשון"
+          }
+        },
+        {
+          "id": "boundary_no_phone_first",
+          "label": {
+            "en": "No phone number before mutual approval",
+            "he": "בלי מספר טלפון לפני אישור הדדי"
+          }
+        },
+        {
+          "id": "boundary_no_unverified",
+          "label": {
+            "en": "Only verified members",
+            "he": "רק משתמשים מאומתים"
+          }
+        }
+      ]
+    },
+    {
+      "id": "privacy_reveal_mode",
+      "sectionId": "boundaries_and_privacy",
+      "type": "single_select",
+      "required": true,
+      "matchingWeight": "high",
+      "visibility": "internal_matching_only",
+      "prompt": {
+        "en": "When should your identity become more visible?",
+        "he": "מתי הזהות שלך צריכה להיות יותר גלויה?"
+      },
+      "answers": [
+        {
+          "id": "reveal_mutual_yes",
+          "label": {
+            "en": "Only after mutual yes",
+            "he": "רק אחרי אישור הדדי"
+          }
+        },
+        {
+          "id": "reveal_after_concierge",
+          "label": {
+            "en": "After concierge review and mutual yes",
+            "he": "אחרי בדיקת קונסיירז' ואישור הדדי"
+          }
+        },
+        {
+          "id": "reveal_audio_first",
+          "label": {
+            "en": "Audio intro before face reveal",
+            "he": "הודעה קולית לפני חשיפת פנים"
+          }
+        },
+        {
+          "id": "reveal_photo_blur",
+          "label": {
+            "en": "Blurred photos until both sides approve",
+            "he": "תמונות מטושטשות עד ששני הצדדים מאשרים"
+          }
+        }
+      ]
+    },
+    {
+      "id": "public_profile_elements",
+      "sectionId": "boundaries_and_privacy",
+      "type": "multi_select",
+      "required": true,
+      "maxSelections": 5,
+      "matchingWeight": "low",
+      "visibility": "internal_matching_only",
+      "prompt": {
+        "en": "Which elements are okay to show before mutual approval?",
+        "he": "אילו אלמנטים בסדר להציג לפני אישור הדדי?"
+      },
+      "answers": [
+        {
+          "id": "public_alias",
+          "label": {
+            "en": "Alias",
+            "he": "כינוי"
+          }
+        },
+        {
+          "id": "public_age_band",
+          "label": {
+            "en": "Age band",
+            "he": "קבוצת גיל"
+          }
+        },
+        {
+          "id": "public_city_cluster",
+          "label": {
+            "en": "General area only",
+            "he": "אזור כללי בלבד"
+          }
+        },
+        {
+          "id": "public_voice_note",
+          "label": {
+            "en": "Voice note",
+            "he": "הודעה קולית"
+          }
+        },
+        {
+          "id": "public_blurred_photo",
+          "label": {
+            "en": "Blurred photo",
+            "he": "תמונה מטושטשת"
+          }
+        }
+      ]
+    },
+    {
+      "id": "first_date_style",
+      "sectionId": "date_preferences",
+      "type": "single_select",
+      "required": true,
+      "matchingWeight": "medium",
+      "visibility": "shown_before_match",
+      "prompt": {
+        "en": "What kind of first date sounds best?",
+        "he": "איזה סוג דייט ראשון נשמע לך הכי טוב?"
+      },
+      "answers": [
+        {
+          "id": "date_coffee_walk",
+          "label": {
+            "en": "Coffee and a walk",
+            "he": "קפה והליכה"
+          }
+        },
+        {
+          "id": "date_gallery",
+          "label": {
+            "en": "Gallery or museum",
+            "he": "גלריה או מוזיאון"
+          }
+        },
+        {
+          "id": "date_dinner",
+          "label": {
+            "en": "Chef-picked dinner",
+            "he": "ארוחת ערב שנבחרה על ידי האפליקציה"
+          }
+        },
+        {
+          "id": "date_wellness",
+          "label": {
+            "en": "Daytime wellness date",
+            "he": "דייט יום באווירת וולנס"
+          }
+        }
+      ]
+    },
+    {
+      "id": "date_coordination_preference",
+      "sectionId": "date_preferences",
+      "type": "single_select",
+      "required": true,
+      "matchingWeight": "low",
+      "visibility": "internal_matching_only",
+      "prompt": {
+        "en": "How much help do you want from the platform once a match is approved?",
+        "he": "כמה עזרה את/ה רוצה מהפלטפורמה אחרי שאושרה התאמה?"
+      },
+      "answers": [
+        {
+          "id": "coordination_full",
+          "label": {
+            "en": "Handle everything for us",
+            "he": "שהפלטפורמה תטפל בהכול"
+          }
+        },
+        {
+          "id": "coordination_suggest_then_we_choose",
+          "label": {
+            "en": "Suggest options and let us choose",
+            "he": "להציע אפשרויות ואנחנו נבחר"
+          }
+        },
+        {
+          "id": "coordination_light_touch",
+          "label": {
+            "en": "Just make the intro and let us continue",
+            "he": "רק לעשות את החיבור ואנחנו נמשיך"
+          }
+        }
+      ]
+    },
+    {
+      "id": "pre_date_message_style",
+      "sectionId": "date_preferences",
+      "type": "single_select",
+      "required": false,
+      "matchingWeight": "low",
+      "visibility": "shown_after_mutual_approval",
+      "prompt": {
+        "en": "Before meeting, how would you rather connect?",
+        "he": "לפני המפגש, איך תעדיפ/י להתחבר?"
+      },
+      "answers": [
+        {
+          "id": "message_text_note",
+          "label": {
+            "en": "Short personal note",
+            "he": "פתק אישי קצר"
+          }
+        },
+        {
+          "id": "message_voice_note",
+          "label": {
+            "en": "Voice greeting",
+            "he": "ברכה קולית"
+          }
+        },
+        {
+          "id": "message_platform_prompt",
+          "label": {
+            "en": "Prompt-based intro question from the platform",
+            "he": "שאלת פתיחה שנשלחת על ידי הפלטפורמה"
+          }
+        }
+      ]
+    },
+    {
+      "id": "verification_status_preference",
+      "sectionId": "trust_and_verification",
+      "type": "single_select",
+      "required": true,
+      "matchingWeight": "high",
+      "visibility": "internal_matching_only",
+      "prompt": {
+        "en": "What level of verification do you expect from your matches?",
+        "he": "איזו רמת אימות את/ה מצפה לקבל מההתאמות שלך?"
+      },
+      "answers": [
+        {
+          "id": "verify_basic",
+          "label": {
+            "en": "Basic photo and video verification",
+            "he": "אימות בסיסי של תמונה ווידאו"
+          }
+        },
+        {
+          "id": "verify_identity_checked",
+          "label": {
+            "en": "Private identity check completed",
+            "he": "בדיקת זהות פרטית הושלמה"
+          }
+        },
+        {
+          "id": "verify_human_reviewed",
+          "label": {
+            "en": "Human-reviewed and quality screened",
+            "he": "נבדק אנושית וסונן איכותית"
+          }
+        }
+      ]
+    },
+    {
+      "id": "safety_support_preference",
+      "sectionId": "trust_and_verification",
+      "type": "single_select",
+      "required": false,
+      "matchingWeight": "low",
+      "visibility": "internal_matching_only",
+      "prompt": {
+        "en": "If something feels off, how involved should our team be?",
+        "he": "אם משהו מרגיש לא נכון, כמה היית רוצה שהצוות שלנו יתערב?"
+      },
+      "answers": [
+        {
+          "id": "support_proactive",
+          "label": {
+            "en": "Be proactive and check in",
+            "he": "להיות פרואקטיביים ולבדוק איתי"
+          }
+        },
+        {
+          "id": "support_on_request",
+          "label": {
+            "en": "Only step in when I ask",
+            "he": "להתערב רק אם אבקש"
+          }
+        },
+        {
+          "id": "support_strict_reporting",
+          "label": {
+            "en": "Focus on fast reporting and blocking tools",
+            "he": "להתמקד בדיווח וחסימה מהירים"
+          }
+        }
+      ]
+    },
+    {
+      "id": "self_summary",
+      "sectionId": "identity_basics",
+      "type": "long_text",
+      "required": true,
+      "matchingWeight": "medium",
+      "visibility": "shown_before_match",
+      "prompt": {
+        "en": "Write a short personal summary",
+        "he": "כתבו תיאור אישי קצר"
+      },
+      "helpText": {
+        "en": "This helps AI and human matchmakers understand tone, story, and intent.",
+        "he": "זה עוזר ל-AI ולשדכנים האנושיים להבין טון, סיפור וכוונה."
+      },
+      "validation": {
+        "minLength": 80,
+        "maxLength": 320
+      },
+      "exampleAnswers": [
+        {
+          "locale": "en",
+          "value": "I am thoughtful, relationship-minded, and happiest when conversation feels honest, calm, and a little playful."
+        },
+        {
+          "locale": "he",
+          "value": "אני אדם/אישה מחושב/ת שמחפש/ת קשר אמיתי, ומרגיש/ה הכי בנוח כשיש שיחה כנה, רגועה וקצת שובבה."
+        }
+      ]
+    }
+  ]
+}
