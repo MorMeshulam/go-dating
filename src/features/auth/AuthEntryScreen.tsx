@@ -43,7 +43,7 @@ export function AuthEntryScreen({ mode }: AuthEntryScreenProps) {
       </View>
 
       <View style={styles.authCard}>
-        <View style={styles.topRow}>
+        <View style={[styles.topRow, isRTL && styles.rowRtl]}>
           <View style={styles.modePill}>
             <Text style={styles.modePillLabel}>
               {isLogin ? copy.auth.loginCta[locale] : copy.auth.registerCta[locale]}
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.lg,
   },
   cardTitle: {
-    color: colors.white,
+    color: colors.text,
     fontSize: 30,
     fontWeight: '800',
     letterSpacing: -0.9,
@@ -191,6 +191,9 @@ const styles = StyleSheet.create({
     fontSize: typeScale.body,
     lineHeight: 21,
     maxWidth: 280,
+  },
+  rowRtl: {
+    flexDirection: 'row-reverse',
   },
   textRtl: {
     textAlign: 'right',

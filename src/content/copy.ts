@@ -6,8 +6,8 @@ export const copy = {
     title: 'Choose your language / בחרו שפה',
   },
   appName: {
-    en: 'Anonymous Match',
-    he: 'Anonymous Match',
+    en: 'GoDating',
+    he: 'GoDating',
   },
   appTagline: {
     en: 'Private-first dating with AI and human matchmaking',

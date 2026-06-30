@@ -1,10 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { AppScreen } from '../../components/layout/AppScreen';
 import { Button } from '../../components/ui/Button';
@@ -19,7 +14,11 @@ import {
   getSectionById,
   isQuestionAnswered,
 } from './questionBank';
-import type { ProfileAnswerMap, ProfileAnswerValue, ProfileQuestion } from './types';
+import type {
+  ProfileAnswerMap,
+  ProfileAnswerValue,
+  ProfileQuestion,
+} from './types';
 
 function updateMultiValue(
   currentValue: ProfileAnswerValue | undefined,
@@ -29,11 +28,11 @@ function updateMultiValue(
   const currentValues = Array.isArray(currentValue)
     ? currentValue
     : currentValue
-      ? [currentValue]
-      : [];
+    ? [currentValue]
+    : [];
 
   if (currentValues.includes(nextValue)) {
-    return currentValues.filter((value) => value !== nextValue);
+    return currentValues.filter(value => value !== nextValue);
   }
 
   if (maxSelections && currentValues.length >= maxSelections) {
@@ -53,12 +52,14 @@ export function ProfileFlowScreen() {
 
   const currentQuestion = flowQuestions[currentIndex];
   const currentSection = getSectionById(currentQuestion.sectionId);
-  const progress = Math.round(((currentIndex + 1) / flowQuestions.length) * 100);
+  const progress = Math.round(
+    ((currentIndex + 1) / flowQuestions.length) * 100,
+  );
   const currentValue = answers[currentQuestion.id];
   const canContinue = isQuestionAnswered(currentQuestion, currentValue);
 
   const updateAnswer = (value: ProfileAnswerValue) => {
-    setAnswers((currentAnswers) => ({
+    setAnswers(currentAnswers => ({
       ...currentAnswers,
       [currentQuestion.id]: value,
     }));
@@ -70,7 +71,7 @@ export function ProfileFlowScreen() {
       return;
     }
 
-    setCurrentIndex((index) => index + 1);
+    setCurrentIndex(index => index + 1);
   };
 
   const goBack = () => {
@@ -78,7 +79,7 @@ export function ProfileFlowScreen() {
       return;
     }
 
-    setCurrentIndex((index) => index - 1);
+    setCurrentIndex(index => index - 1);
   };
 
   return (
@@ -197,7 +198,7 @@ function QuestionInput({
     return (
       <TextInput
         multiline
-        onChangeText={(text) => onChange(text)}
+        onChangeText={text => onChange(text)}
         placeholder={localePlaceholder}
         placeholderTextColor={colors.textMuted}
         style={[styles.textArea, isRTL && styles.textRtl]}
@@ -210,8 +211,8 @@ function QuestionInput({
   const selectedValues = Array.isArray(value) ? value : value ? [value] : [];
 
   return (
-    <View style={styles.optionsWrap}>
-      {question.answers?.map((answer) => (
+    <View style={[styles.optionsWrap, { flexDirection: isRTL ? 'row-reverse' : 'row' }]}>
+      {question.answers?.map(answer => (
         <ChoiceChip
           isRTL={isRTL}
           key={answer.id}
@@ -222,7 +223,9 @@ function QuestionInput({
               return;
             }
 
-            onChange(updateMultiValue(value, answer.id, question.maxSelections));
+            onChange(
+              updateMultiValue(value, answer.id, question.maxSelections),
+            );
           }}
           selected={selectedValues.includes(answer.id)}
         />
@@ -268,7 +271,6 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   optionsWrap: {
-    flexDirection: 'row',
     flexWrap: 'wrap',
   },
   primaryAction: {

@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   title: {
-    color: colors.white,
+    color: colors.text,
     fontSize: typeScale.hero,
     fontWeight: '800',
     letterSpacing: -1.1,

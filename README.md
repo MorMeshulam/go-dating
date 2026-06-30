@@ -1,4 +1,4 @@
-# Anonymous Match Native App
+# GoDating Native App
 
 A standard React Native app structure for a privacy-first dating product with:
 
@@ -39,6 +39,9 @@ Then run one of:
 npm run ios
 npm run android
 ```
+
 # go-dating
+
 # go-dating
+
 # go-dating

@@ -3,18 +3,15 @@
   "entity": "profile_question_bank",
   "product": {
     "name": {
-      "en": "Anonymous Match",
-      "he": "Anonymous Match"
+      "en": "GoDating",
+      "he": "GoDating"
     },
     "summary": {
       "en": "Bilingual onboarding configuration for an anonymous, premium dating platform powered by AI and human matchmaking.",
       "he": "תצורת אונבורדינג דו-לשונית לפלטפורמת היכרויות אנונימית ופרימיום, המונעת על ידי AI והתאמה אנושית."
     }
   },
-  "supportedLocales": [
-    "en",
-    "he"
-  ],
+  "supportedLocales": ["en", "he"],
   "sections": [
     {
       "id": "identity_basics",

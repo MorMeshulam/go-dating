@@ -148,7 +148,7 @@ export function HomeScreen() {
               </View>
             </View>
 
-            <View style={styles.reasonWrap}>
+            <View style={[styles.reasonWrap, isRTL && styles.rowRtl]}>
               {match.reasons.map((reason) => (
                 <View key={reason} style={styles.reasonPill}>
                   <Text style={[styles.reasonLabel, isRTL && styles.textRtl]}>
@@ -271,8 +271,8 @@ const styles = StyleSheet.create({
   },
   photoBadge: {
     alignSelf: 'flex-start',
-    backgroundColor: colors.overlay,
-    borderColor: 'rgba(255, 255, 255, 0.12)',
+    backgroundColor: colors.surface,
+    borderColor: colors.border,
     borderRadius: radii.pill,
     borderWidth: 1,
     left: spacing.md,
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   photoBadgeLabel: {
-    color: colors.white,
+    color: colors.accent,
     fontSize: typeScale.caption,
     fontWeight: '800',
   },
@@ -371,7 +371,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   reasonPill: {
-    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+    backgroundColor: colors.chipBackground,
     borderRadius: radii.pill,
     marginBottom: spacing.sm,
     marginRight: spacing.sm,

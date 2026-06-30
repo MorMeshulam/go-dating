@@ -7,8 +7,10 @@ type AuthScreenMode = 'login' | 'register';
 type AuthContextValue = {
   authScreenMode: AuthScreenMode;
   completeProfile: (answers: ProfileAnswerMap) => void;
+  dismissPricing: () => void;
   editProfile: () => void;
   hasCompletedProfile: boolean;
+  hasSeenPricing: boolean;
   isAuthenticated: boolean;
   loginMock: () => void;
   logout: () => void;
@@ -38,6 +40,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [authScreenMode, setAuthScreenMode] = useState<AuthScreenMode>('login');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [hasCompletedProfile, setHasCompletedProfile] = useState(false);
+  const [hasSeenPricing, setHasSeenPricing] = useState(false);
   const [profileAnswers, setProfileAnswers] =
     useState<ProfileAnswerMap>(initialProfileAnswers);
 
@@ -48,10 +51,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setProfileAnswers(answers);
         setHasCompletedProfile(true);
       },
+      dismissPricing: () => {
+        setHasSeenPricing(true);
+      },
       editProfile: () => {
         setHasCompletedProfile(false);
       },
       hasCompletedProfile,
+      hasSeenPricing,
       isAuthenticated,
       loginMock: () => {
         setIsAuthenticated(true);
@@ -59,6 +66,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       logout: () => {
         setIsAuthenticated(false);
         setAuthScreenMode('login');
+        setHasSeenPricing(false);
       },
       profileAnswers,
       registerMock: () => {
@@ -71,7 +79,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setAuthScreenMode('register');
       },
     }),
-    [authScreenMode, hasCompletedProfile, isAuthenticated, profileAnswers],
+    [authScreenMode, hasCompletedProfile, hasSeenPricing, isAuthenticated, profileAnswers],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

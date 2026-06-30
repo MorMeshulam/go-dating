@@ -34,7 +34,7 @@ export function ChoiceChip({
 
 const styles = StyleSheet.create({
   base: {
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    backgroundColor: colors.chipBackground,
     borderColor: colors.border,
     borderRadius: radii.pill,
     borderWidth: 1,
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   labelSelected: {
-    color: colors.background,
+    color: colors.white,
   },
   pressed: {
     opacity: 0.86,
