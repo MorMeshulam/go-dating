@@ -1,8 +1,5 @@
 import type { LocalizedText, Locale } from '../../types/common';
-import {
-  formatAnswerValue,
-  getQuestionById,
-} from '../onboarding/questionBank';
+import { formatAnswerValue, getQuestionById } from '../onboarding/questionBank';
 import type { ProfileAnswerMap, ProfileAnswerValue } from '../onboarding/types';
 
 type MatchCandidate = {
@@ -85,10 +82,13 @@ function asArray(value: ProfileAnswerValue | undefined) {
 }
 
 function overlap(left: string[], right: string[]) {
-  return left.filter((value) => right.includes(value));
+  return left.filter(value => right.includes(value));
 }
 
-export function getRankedMatches(profileAnswers: ProfileAnswerMap, locale: Locale) {
+export function getRankedMatches(
+  profileAnswers: ProfileAnswerMap,
+  locale: Locale,
+) {
   const intentAnswers = asArray(profileAnswers.relationship_goal);
   const valueAnswers = asArray(profileAnswers.top_values);
   const privacyAnswer = asArray(profileAnswers.privacy_reveal_mode);
@@ -96,7 +96,7 @@ export function getRankedMatches(profileAnswers: ProfileAnswerMap, locale: Local
   const paceAnswer = asArray(profileAnswers.dating_pace);
 
   return matchCandidates
-    .map<RankedMatch>((candidate) => {
+    .map<RankedMatch>(candidate => {
       const sharedGoals = overlap(intentAnswers, candidate.relationshipGoals);
       const sharedValues = overlap(valueAnswers, candidate.topValues);
       const sharedPrivacy = overlap(privacyAnswer, [candidate.privacy]);
@@ -126,8 +126,8 @@ export function getRankedMatches(profileAnswers: ProfileAnswerMap, locale: Local
             ? 'גבולות פרטיות תואמים'
             : 'Compatible privacy rules'
           : locale === 'he'
-            ? 'קצב חשיפה משלים'
-            : 'Complementary reveal pace',
+          ? 'קצב חשיפה משלים'
+          : 'Complementary reveal pace',
       ].filter(Boolean) as string[];
 
       return {

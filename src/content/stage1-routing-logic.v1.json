@@ -1,0 +1,234 @@
+{
+  "version": "1.0.0",
+  "entity": "stage_1_routing_rules",
+  "description": {
+    "en": "Rules for assigning a primary onboarding profile and secondary trait tags after stage 1.",
+    "he": "כללים לשיוך פרופיל אונבורדינג ראשי ותגיות תכונה משניות לאחר שלב 1."
+  },
+  "routingProfiles": [
+    {
+      "id": "serious_long_term",
+      "label": {
+        "en": "Serious Long-Term",
+        "he": "רציני/ת לטווח ארוך"
+      },
+      "loadsModules": [
+        "relationship_intent",
+        "values_and_lifestyle",
+        "children_family_outlook",
+        "personality_and_communication",
+        "trust_and_verification"
+      ],
+      "secondaryTags": ["high_intent", "future_oriented"]
+    },
+    {
+      "id": "marriage_minded",
+      "label": {
+        "en": "Marriage-Minded",
+        "he": "מכוון/ת לנישואים"
+      },
+      "loadsModules": [
+        "relationship_intent",
+        "children_family_outlook",
+        "values_and_lifestyle",
+        "trust_and_verification"
+      ],
+      "secondaryTags": ["commitment_forward", "family_oriented"]
+    },
+    {
+      "id": "slow_and_careful",
+      "label": {
+        "en": "Slow and Careful",
+        "he": "איטי/ת וזהיר/ה"
+      },
+      "loadsModules": [
+        "relationship_intent",
+        "emotional_readiness",
+        "boundaries_and_privacy",
+        "personality_and_communication"
+      ],
+      "secondaryTags": ["pace_sensitive", "boundary_aware"]
+    },
+    {
+      "id": "privacy_first",
+      "label": {
+        "en": "Privacy First",
+        "he": "פרטיות בראש סדר העדיפויות"
+      },
+      "loadsModules": [
+        "boundaries_and_privacy",
+        "trust_and_verification",
+        "public_profile_elements",
+        "privacy_reveal_mode"
+      ],
+      "secondaryTags": ["high_privacy", "controlled_reveal"]
+    },
+    {
+      "id": "trust_first",
+      "label": {
+        "en": "Trust First",
+        "he": "אמון בראש סדר העדיפויות"
+      },
+      "loadsModules": [
+        "trust_and_verification",
+        "safety_support_preference",
+        "boundaries_and_privacy"
+      ],
+      "secondaryTags": ["safety_sensitive", "verification_priority"]
+    },
+    {
+      "id": "concierge_guided",
+      "label": {
+        "en": "Concierge Guided",
+        "he": "ליווי קונסיירז'"
+      },
+      "loadsModules": [
+        "relationship_intent",
+        "date_preferences",
+        "date_coordination_preference",
+        "safety_support_preference"
+      ],
+      "secondaryTags": ["service_led", "high_support"]
+    },
+    {
+      "id": "exploring_open",
+      "label": {
+        "en": "Exploring Open",
+        "he": "פתוח/ה ובודק/ת"
+      },
+      "loadsModules": [
+        "attraction_preferences",
+        "personality_and_communication",
+        "lifestyle_rhythm",
+        "date_preferences"
+      ],
+      "secondaryTags": ["lower_pressure", "discovery_mode"]
+    },
+    {
+      "id": "chemistry_first",
+      "label": {
+        "en": "Chemistry First",
+        "he": "כימיה קודם"
+      },
+      "loadsModules": [
+        "attraction_preferences",
+        "conversation_style",
+        "first_date_style",
+        "date_preferences"
+      ],
+      "secondaryTags": ["attraction_led", "interaction_priority"]
+    }
+  ],
+  "routingRules": [
+    {
+      "id": "route_marriage_minded",
+      "priority": 100,
+      "whenAll": [
+        { "questionId": "what_are_you_looking_for_now", "includes": ["marriage_minded"] },
+        { "questionId": "how_ready_are_you_for_a_real_relationship", "includes": ["ready_now", "warming_up"] }
+      ],
+      "assignProfile": "marriage_minded"
+    },
+    {
+      "id": "route_privacy_first",
+      "priority": 95,
+      "whenAll": [
+        { "questionId": "how_private_do_you_want_to_be", "includes": ["very_private"] },
+        { "questionId": "what_level_of_verification_do_you_expect", "includes": ["identity_checked", "human_reviewed"] }
+      ],
+      "assignProfile": "privacy_first"
+    },
+    {
+      "id": "route_trust_first",
+      "priority": 90,
+      "whenAll": [
+        { "questionId": "what_level_of_verification_do_you_expect", "includes": ["human_reviewed"] },
+        { "questionId": "what_matters_most_in_a_match_first", "includes": ["trust"] }
+      ],
+      "assignProfile": "trust_first"
+    },
+    {
+      "id": "route_concierge_guided",
+      "priority": 85,
+      "whenAll": [
+        { "questionId": "how_much_help_do_you_want_from_us", "includes": ["concierge"] }
+      ],
+      "assignProfile": "concierge_guided"
+    },
+    {
+      "id": "route_serious_long_term",
+      "priority": 80,
+      "whenAll": [
+        { "questionId": "what_are_you_looking_for_now", "includes": ["long_term"] },
+        { "questionId": "how_ready_are_you_for_a_real_relationship", "includes": ["ready_now"] }
+      ],
+      "assignProfile": "serious_long_term"
+    },
+    {
+      "id": "route_slow_and_careful",
+      "priority": 75,
+      "whenAll": [
+        { "questionId": "what_pace_feels_right", "includes": ["careful"] }
+      ],
+      "assignProfile": "slow_and_careful"
+    },
+    {
+      "id": "route_chemistry_first",
+      "priority": 70,
+      "whenAll": [
+        { "questionId": "what_matters_most_in_a_match_first", "includes": ["attraction"] }
+      ],
+      "assignProfile": "chemistry_first"
+    },
+    {
+      "id": "route_exploring_open",
+      "priority": 60,
+      "whenAll": [
+        { "questionId": "what_are_you_looking_for_now", "includes": ["exploring", "slow_burn"] }
+      ],
+      "assignProfile": "exploring_open"
+    }
+  ],
+  "fallbackRule": {
+    "assignProfile": "serious_long_term",
+    "reason": "Default profile for users who do not clearly match a more specific high-priority route."
+  },
+  "secondaryTagRules": [
+    {
+      "id": "tag_high_privacy",
+      "whenAll": [
+        { "questionId": "how_private_do_you_want_to_be", "includes": ["very_private"] }
+      ],
+      "addTags": ["high_privacy"]
+    },
+    {
+      "id": "tag_high_trust_expectation",
+      "whenAll": [
+        { "questionId": "what_level_of_verification_do_you_expect", "includes": ["human_reviewed"] }
+      ],
+      "addTags": ["high_trust_expectation"]
+    },
+    {
+      "id": "tag_needs_support",
+      "whenAll": [
+        { "questionId": "how_much_help_do_you_want_from_us", "includes": ["guided", "concierge"] }
+      ],
+      "addTags": ["needs_support"]
+    },
+    {
+      "id": "tag_fast_readiness",
+      "whenAll": [
+        { "questionId": "what_pace_feels_right", "includes": ["ready_soon"] },
+        { "questionId": "how_ready_are_you_for_a_real_relationship", "includes": ["ready_now"] }
+      ],
+      "addTags": ["fast_readiness"]
+    },
+    {
+      "id": "tag_values_led",
+      "whenAll": [
+        { "questionId": "what_matters_most_in_a_match_first", "includes": ["values"] }
+      ],
+      "addTags": ["values_led"]
+    }
+  ]
+}

@@ -1,130 +1,127 @@
-import React from 'react';
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import React, { useMemo } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { CompassLogo } from '../../components/brand/CompassLogo';
 import { AppScreen } from '../../components/layout/AppScreen';
+import { ThemeSwitcher } from '../../components/ui/ThemeSwitcher';
 import { copy } from '../../content/copy';
 import { useAppPreferences } from '../../state/preferences/AppPreferencesContext';
-import { colors, radii, shadows, spacing, typeScale } from '../../theme';
+import type { Palette } from '../../theme';
+import { radii, shadows, spacing, typeScale } from '../../theme';
+import { useTheme } from '../../theme/ThemeContext';
 import type { Locale } from '../../types/common';
 
-const languageCards: Array<{
-  id: Locale;
-  subtitle: string;
-  title: string;
-}> = [
-  {
-    id: 'en',
-    subtitle: 'Continue in English',
-    title: 'English',
-  },
-  {
-    id: 'he',
-    subtitle: 'המשך/י בעברית',
-    title: 'עברית',
-  },
+const languageOptions: Array<{ id: Locale; flag: string; label: string }> = [
+  { id: 'en', flag: '🇬🇧', label: 'English' },
+  { id: 'he', flag: '🇮🇱', label: 'עברית' },
 ];
 
 export function LanguageSelectionScreen() {
+  const { colors } = useTheme();
+  const styles = useMemo(() => getStyles(colors), [colors]);
   const { setLocale } = useAppPreferences();
 
   return (
-    <AppScreen contentContainerStyle={styles.content}>
-      <View style={styles.heroCard}>
-        <Text style={styles.eyebrow}>FIRST STEP</Text>
-        <Text style={styles.title}>{copy.languageGate.title}</Text>
-        <Text style={styles.description}>{copy.languageGate.description}</Text>
+    <AppScreen scroll={false} contentContainerStyle={styles.content}>
+      <View style={styles.hero}>
+        <CompassLogo size={112} />
+        <Text style={styles.brand}>{copy.appName.en}</Text>
+        <Text style={styles.tagline}>{copy.appTagline.en}</Text>
+        <Text style={styles.taglineAlt}>{copy.appTagline.he}</Text>
       </View>
 
-      <View style={styles.cardList}>
-        {languageCards.map((languageCard) => (
+      <View style={styles.languageRow}>
+        {languageOptions.map(option => (
           <Pressable
-            key={languageCard.id}
-            onPress={() => setLocale(languageCard.id)}
+            key={option.id}
+            onPress={() => setLocale(option.id)}
             style={({ pressed }) => [
-              styles.languageCard,
-              pressed && styles.languageCardPressed,
+              styles.languageButton,
+              pressed && styles.languageButtonPressed,
             ]}
           >
-            <Text style={styles.languageTitle}>{languageCard.title}</Text>
-            <Text style={styles.languageSubtitle}>{languageCard.subtitle}</Text>
+            <Text style={styles.flag}>{option.flag}</Text>
+            <Text style={styles.languageLabel}>{option.label}</Text>
           </Pressable>
         ))}
       </View>
 
-      <Text style={styles.note}>{copy.languageGate.note}</Text>
+      <View style={styles.themeBlock}>
+        <Text style={styles.themeLabel}>{copy.languageGate.themeLabel}</Text>
+        <ThemeSwitcher />
+      </View>
     </AppScreen>
   );
 }
 
-const styles = StyleSheet.create({
-  cardList: {
-    gap: spacing.md,
-  },
-  content: {
-    gap: spacing.xl,
-    justifyContent: 'center',
-    paddingTop: spacing.xl,
-  },
-  description: {
-    color: colors.textSoft,
-    fontSize: typeScale.body,
-    lineHeight: 23,
-  },
-  eyebrow: {
-    color: colors.mint,
-    fontSize: typeScale.caption,
-    fontWeight: '800',
-    letterSpacing: 1,
-    marginBottom: spacing.sm,
-  },
-  heroCard: {
-    backgroundColor: colors.overlay,
-    borderColor: colors.border,
-    borderRadius: radii.xl,
-    borderWidth: 1,
-    padding: spacing.xl,
-  },
-  languageCard: {
-    ...shadows,
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: radii.lg,
-    borderWidth: 1,
-    minHeight: 118,
-    padding: spacing.xl,
-  },
-  languageCardPressed: {
-    opacity: 0.86,
-  },
-  languageSubtitle: {
-    color: colors.textMuted,
-    fontSize: typeScale.body,
-    lineHeight: 22,
-  },
-  languageTitle: {
-    color: colors.text,
-    fontSize: 28,
-    fontWeight: '800',
-    letterSpacing: -0.8,
-    marginBottom: spacing.xs,
-  },
-  note: {
-    color: colors.gold,
-    fontSize: typeScale.caption,
-    fontWeight: '700',
-    lineHeight: 18,
-  },
-  title: {
-    color: colors.text,
-    fontSize: typeScale.hero,
-    fontWeight: '800',
-    letterSpacing: -1.1,
-    lineHeight: 40,
-    marginBottom: spacing.sm,
-  },
-});
+const getStyles = (colors: Palette) =>
+  StyleSheet.create({
+    content: {
+      alignItems: 'center',
+      gap: spacing.xxl,
+      justifyContent: 'center',
+    },
+    hero: {
+      alignItems: 'center',
+      gap: spacing.sm,
+    },
+    brand: {
+      color: colors.text,
+      fontSize: 40,
+      fontWeight: '800',
+      letterSpacing: -1.2,
+      marginTop: spacing.lg,
+    },
+    tagline: {
+      color: colors.textSoft,
+      fontSize: typeScale.body,
+      paddingHorizontal: spacing.lg,
+      textAlign: 'center',
+    },
+    taglineAlt: {
+      color: colors.textMuted,
+      fontSize: typeScale.caption,
+      paddingHorizontal: spacing.lg,
+      textAlign: 'center',
+      writingDirection: 'rtl',
+    },
+    languageRow: {
+      flexDirection: 'row',
+      gap: spacing.md,
+      width: '100%',
+    },
+    languageButton: {
+      ...shadows,
+      alignItems: 'center',
+      backgroundColor: colors.surface,
+      borderColor: colors.border,
+      borderRadius: radii.lg,
+      borderWidth: 1,
+      flex: 1,
+      gap: spacing.xs,
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.lg,
+    },
+    languageButtonPressed: {
+      opacity: 0.85,
+    },
+    flag: {
+      fontSize: 36,
+    },
+    languageLabel: {
+      color: colors.text,
+      fontSize: typeScale.subtitle,
+      fontWeight: '800',
+    },
+    themeBlock: {
+      alignItems: 'center',
+      gap: spacing.md,
+    },
+    themeLabel: {
+      color: colors.textMuted,
+      fontSize: typeScale.caption,
+      fontWeight: '800',
+      letterSpacing: 1,
+      textTransform: 'uppercase',
+    },
+  });

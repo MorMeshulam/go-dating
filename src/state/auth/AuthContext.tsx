@@ -1,12 +1,21 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
 
-import type { ProfileAnswerMap } from '../../features/onboarding/types';
+import type {
+  ProfileAnswerMap,
+  RoutingResult,
+} from '../../features/onboarding/types';
 
 type AuthScreenMode = 'login' | 'register';
 
+type CompleteProfileInput = {
+  routing: RoutingResult;
+  stage1Answers: ProfileAnswerMap;
+  stage2Answers: ProfileAnswerMap;
+};
+
 type AuthContextValue = {
   authScreenMode: AuthScreenMode;
-  completeProfile: (answers: ProfileAnswerMap) => void;
+  completeProfile: (input: CompleteProfileInput) => void;
   dismissPricing: () => void;
   editProfile: () => void;
   hasCompletedProfile: boolean;
@@ -16,8 +25,10 @@ type AuthContextValue = {
   logout: () => void;
   profileAnswers: ProfileAnswerMap;
   registerMock: () => void;
+  routing: RoutingResult | null;
   showLogin: () => void;
   showRegister: () => void;
+  stage1Answers: ProfileAnswerMap;
 };
 
 const initialProfileAnswers: ProfileAnswerMap = {
@@ -43,12 +54,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [hasSeenPricing, setHasSeenPricing] = useState(false);
   const [profileAnswers, setProfileAnswers] =
     useState<ProfileAnswerMap>(initialProfileAnswers);
+  const [stage1Answers, setStage1Answers] = useState<ProfileAnswerMap>({});
+  const [routing, setRouting] = useState<RoutingResult | null>(null);
 
   const value = useMemo<AuthContextValue>(
     () => ({
       authScreenMode,
-      completeProfile: (answers) => {
-        setProfileAnswers(answers);
+      completeProfile: ({ routing: nextRouting, stage1Answers: nextStage1, stage2Answers }) => {
+        setStage1Answers(nextStage1);
+        setRouting(nextRouting);
+        setProfileAnswers(stage2Answers);
         setHasCompletedProfile(true);
       },
       dismissPricing: () => {
@@ -72,14 +87,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       registerMock: () => {
         setIsAuthenticated(true);
       },
+      routing,
       showLogin: () => {
         setAuthScreenMode('login');
       },
       showRegister: () => {
         setAuthScreenMode('register');
       },
+      stage1Answers,
     }),
-    [authScreenMode, hasCompletedProfile, hasSeenPricing, isAuthenticated, profileAnswers],
+    [
+      authScreenMode,
+      hasCompletedProfile,
+      hasSeenPricing,
+      isAuthenticated,
+      profileAnswers,
+      routing,
+      stage1Answers,
+    ],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
