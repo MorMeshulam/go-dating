@@ -28,16 +28,18 @@ export function getLocalizedText(text: LocalizedText, locale: Locale) {
 }
 
 export function getQuestionById(questionId: string) {
-  return profileQuestionBank.questions.find((question) => question.id === questionId);
+  return profileQuestionBank.questions.find(
+    question => question.id === questionId,
+  );
 }
 
 export function getSectionById(sectionId: string) {
-  return profileQuestionBank.sections.find((section) => section.id === sectionId);
+  return profileQuestionBank.sections.find(section => section.id === sectionId);
 }
 
 export function getProfileFlowQuestions() {
   return initialProfileFlowQuestionIds
-    .map((questionId) => getQuestionById(questionId))
+    .map(questionId => getQuestionById(questionId))
     .filter(Boolean) as ProfileQuestion[];
 }
 
@@ -67,9 +69,9 @@ export function getAnswerLabel(
   answerId: string,
   locale: Locale,
 ) {
-  return question.answers?.find((answer) => answer.id === answerId)
+  return question.answers?.find(answer => answer.id === answerId)
     ? getLocalizedText(
-        question.answers.find((answer) => answer.id === answerId)!.label,
+        question.answers.find(answer => answer.id === answerId)!.label,
         locale,
       )
     : answerId;
@@ -95,12 +97,15 @@ export function formatAnswerValue(
   }
 
   return value
-    .map((answerId) => getAnswerLabel(question, answerId, locale))
+    .map(answerId => getAnswerLabel(question, answerId, locale))
     .join(' • ');
 }
 
-export function getAnsweredCount(answerMap: ProfileAnswerMap) {
-  return getProfileFlowQuestions().filter((question) =>
+export function getAnsweredCount(
+  answerMap: ProfileAnswerMap,
+  questions: ProfileQuestion[] = getProfileFlowQuestions(),
+) {
+  return questions.filter(question =>
     isQuestionAnswered(question, answerMap[question.id]),
   ).length;
 }

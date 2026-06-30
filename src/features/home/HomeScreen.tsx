@@ -6,8 +6,17 @@ import { Button } from '../../components/ui/Button';
 import { copy } from '../../content/copy';
 import { useAuth } from '../../state/auth/AuthContext';
 import { useAppPreferences } from '../../state/preferences/AppPreferencesContext';
-import { colors, radii, shadows, spacing, typeScale } from '../../theme';
-import { formatAnswerValue, getAnsweredCount } from '../onboarding/questionBank';
+import { radii, shadows, spacing, typeScale } from '../../theme';
+import type { Palette } from '../../theme';
+import { useTheme } from '../../theme/ThemeContext';
+import {
+  formatAnswerValue,
+  getAnsweredCount,
+} from '../onboarding/questionBank';
+import {
+  getRoutingProfileLabel,
+  getStage2Questions,
+} from '../onboarding/profileRouting';
 import { getRankedMatches } from '../discovery/matchmaking';
 
 const visibleSummaryQuestionIds = [
@@ -20,7 +29,9 @@ const visibleSummaryQuestionIds = [
 const mockProfilePhoto = require('../../../assets/mock-profile-person.png');
 
 export function HomeScreen() {
-  const { editProfile, logout, profileAnswers } = useAuth();
+  const { colors } = useTheme();
+  const styles = useMemo(() => getStyles(colors), [colors]);
+  const { editProfile, logout, profileAnswers, routing } = useAuth();
   const { isRTL, locale } = useAppPreferences();
 
   const matches = useMemo(
@@ -28,15 +39,35 @@ export function HomeScreen() {
     [locale, profileAnswers],
   );
 
-  const alias = formatAnswerValue('profile_alias', profileAnswers.profile_alias, locale);
-  const answeredCount = getAnsweredCount(profileAnswers);
+  // Once routed, profile readiness is measured against the member's own
+  // stage-2 plan rather than the legacy fixed-length flow.
+  const stage2Questions = useMemo(
+    () => (routing ? getStage2Questions(routing) : null),
+    [routing],
+  );
+
+  const alias = formatAnswerValue(
+    'profile_alias',
+    profileAnswers.profile_alias,
+    locale,
+  );
+  const totalQuestionCount = stage2Questions?.length ?? 11;
+  const answeredCount = getAnsweredCount(
+    profileAnswers,
+    stage2Questions ?? undefined,
+  );
+  const routedProfileLabel = routing
+    ? getRoutingProfileLabel(routing.profileId, locale)
+    : null;
 
   return (
     <AppScreen contentContainerStyle={styles.content}>
       <View style={[styles.headerRow, isRTL && styles.rowRtl]}>
         <View style={styles.headerCopy}>
           <Text style={[styles.eyebrow, isRTL && styles.textRtl]}>
-            {copy.home.mockBadge[locale]}
+            {routedProfileLabel
+              ? `${copy.onboarding.routedToLabel[locale]} • ${routedProfileLabel}`
+              : copy.home.mockBadge[locale]}
           </Text>
           <Text style={[styles.title, isRTL && styles.textRtl]}>
             {copy.home.title[locale]}
@@ -69,7 +100,8 @@ export function HomeScreen() {
           {alias ?? copy.appName[locale]}
         </Text>
         <Text style={[styles.heroMeta, isRTL && styles.textRtl]}>
-          {copy.home.profileReady[locale]} • {answeredCount} / 11
+          {copy.home.profileReady[locale]} • {answeredCount} /{' '}
+          {totalQuestionCount}
         </Text>
         <View style={[styles.statsRow, isRTL && styles.rowRtl]}>
           <StatCard
@@ -102,7 +134,7 @@ export function HomeScreen() {
       </View>
 
       <View style={styles.summaryCard}>
-        {visibleSummaryQuestionIds.map((questionId) => {
+        {visibleSummaryQuestionIds.map(questionId => {
           const answerValue = formatAnswerValue(
             questionId,
             profileAnswers[questionId],
@@ -114,7 +146,10 @@ export function HomeScreen() {
           }
 
           return (
-            <View key={questionId} style={[styles.summaryRow, isRTL && styles.rowRtl]}>
+            <View
+              key={questionId}
+              style={[styles.summaryRow, isRTL && styles.rowRtl]}
+            >
               <View style={styles.summaryDot} />
               <Text style={[styles.summaryText, isRTL && styles.textRtl]}>
                 {answerValue}
@@ -131,7 +166,7 @@ export function HomeScreen() {
       </View>
 
       <View style={styles.matchList}>
-        {matches.slice(0, 3).map((match) => (
+        {matches.slice(0, 3).map(match => (
           <View key={match.id} style={styles.matchCard}>
             <View style={[styles.matchTopRow, isRTL && styles.rowRtl]}>
               <View style={styles.matchTopCopy}>
@@ -148,8 +183,8 @@ export function HomeScreen() {
               </View>
             </View>
 
-            <View style={[styles.reasonWrap, isRTL && styles.rowRtl]}>
-              {match.reasons.map((reason) => (
+            <View style={styles.reasonWrap}>
+              {match.reasons.map(reason => (
                 <View key={reason} style={styles.reasonPill}>
                   <Text style={[styles.reasonLabel, isRTL && styles.textRtl]}>
                     {reason}
@@ -192,6 +227,9 @@ export function HomeScreen() {
 }
 
 function StatCard({ label, value }: { label: string; value: string }) {
+  const { colors } = useTheme();
+  const styles = useMemo(() => getStyles(colors), [colors]);
+
   return (
     <View style={styles.statCard}>
       <Text style={styles.statValue}>{value}</Text>
@@ -200,276 +238,282 @@ function StatCard({ label, value }: { label: string; value: string }) {
   );
 }
 
-const styles = StyleSheet.create({
-  conciergeBody: {
-    color: colors.textMuted,
-    fontSize: typeScale.body,
-    lineHeight: 23,
-  },
-  conciergeCard: {
-    ...shadows,
-    backgroundColor: colors.overlay,
-    borderColor: colors.border,
-    borderRadius: radii.lg,
-    borderWidth: 1,
-    marginTop: spacing.sm,
-    padding: spacing.lg,
-  },
-  conciergeTitle: {
-    color: colors.text,
-    fontSize: typeScale.subtitle,
-    fontWeight: '800',
-    marginBottom: spacing.sm,
-  },
-  content: {
-    gap: spacing.lg,
-    paddingTop: spacing.xl,
-  },
-  description: {
-    color: colors.textMuted,
-    fontSize: typeScale.body,
-    lineHeight: 23,
-  },
-  eyebrow: {
-    color: colors.mint,
-    fontSize: typeScale.caption,
-    fontWeight: '800',
-    letterSpacing: 1,
-    marginBottom: spacing.xs,
-    textTransform: 'uppercase',
-  },
-  flexAction: {
-    flex: 1,
-  },
-  headerCopy: {
-    flex: 1,
-  },
-  headerRow: {
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-    gap: spacing.md,
-    justifyContent: 'space-between',
-  },
-  heroActions: {
-    flexDirection: 'row',
-    gap: spacing.md,
-  },
-  heroAlias: {
-    color: colors.text,
-    fontSize: 30,
-    fontWeight: '800',
-    letterSpacing: -0.8,
-    marginBottom: spacing.sm,
-  },
-  heroCard: {
-    ...shadows,
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: radii.lg,
-    borderWidth: 1,
-    padding: spacing.xl,
-  },
-  photoBadge: {
-    alignSelf: 'flex-start',
-    backgroundColor: colors.surface,
-    borderColor: colors.border,
-    borderRadius: radii.pill,
-    borderWidth: 1,
-    left: spacing.md,
-    paddingHorizontal: spacing.md,
-    paddingVertical: 8,
-    position: 'absolute',
-    top: spacing.md,
-    zIndex: 2,
-  },
-  photoBadgeLabel: {
-    color: colors.accent,
-    fontSize: typeScale.caption,
-    fontWeight: '800',
-  },
-  photoCaption: {
-    backgroundColor: colors.overlay,
-    borderTopColor: colors.border,
-    borderTopWidth: 1,
-    padding: spacing.md,
-  },
-  photoCard: {
-    backgroundColor: colors.surfaceMuted,
-    borderColor: colors.border,
-    borderRadius: radii.lg,
-    borderWidth: 1,
-    marginBottom: spacing.lg,
-    overflow: 'hidden',
-  },
-  photoDescription: {
-    color: colors.textMuted,
-    fontSize: typeScale.body,
-    lineHeight: 22,
-  },
-  photoHeadline: {
-    color: colors.text,
-    fontSize: typeScale.subtitle,
-    fontWeight: '800',
-    marginBottom: spacing.xs,
-  },
-  profileImage: {
-    aspectRatio: 4 / 5,
-    backgroundColor: colors.surfaceStrong,
-    width: '100%',
-  },
-  heroMeta: {
-    color: colors.textMuted,
-    fontSize: typeScale.body,
-    lineHeight: 22,
-    marginBottom: spacing.lg,
-  },
-  matchActions: {
-    flexDirection: 'row',
-    gap: spacing.md,
-  },
-  matchAlias: {
-    color: colors.text,
-    fontSize: typeScale.title,
-    fontWeight: '800',
-  },
-  matchArea: {
-    color: colors.textMuted,
-    fontSize: typeScale.caption,
-    fontWeight: '700',
-    marginTop: 4,
-  },
-  matchCard: {
-    ...shadows,
-    backgroundColor: colors.overlay,
-    borderColor: colors.border,
-    borderRadius: radii.lg,
-    borderWidth: 1,
-    padding: spacing.lg,
-  },
-  matchList: {
-    gap: spacing.md,
-  },
-  matchNote: {
-    color: colors.textSoft,
-    fontSize: typeScale.body,
-    lineHeight: 22,
-    marginBottom: spacing.lg,
-  },
-  matchTopCopy: {
-    flex: 1,
-  },
-  matchTopRow: {
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-    gap: spacing.md,
-    justifyContent: 'space-between',
-    marginBottom: spacing.md,
-  },
-  reasonLabel: {
-    color: colors.textSoft,
-    fontSize: typeScale.caption,
-    fontWeight: '700',
-  },
-  reasonPill: {
-    backgroundColor: colors.chipBackground,
-    borderRadius: radii.pill,
-    marginBottom: spacing.sm,
-    marginRight: spacing.sm,
-    paddingHorizontal: spacing.md,
-    paddingVertical: 8,
-  },
-  reasonWrap: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginBottom: spacing.md,
-  },
-  rowRtl: {
-    flexDirection: 'row-reverse',
-  },
-  scoreBadge: {
-    alignItems: 'center',
-    backgroundColor: colors.accentMuted,
-    borderRadius: radii.md,
-    minWidth: 72,
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-  },
-  scoreLabel: {
-    color: colors.accent,
-    fontSize: typeScale.caption,
-    fontWeight: '800',
-  },
-  scoreValue: {
-    color: colors.accent,
-    fontSize: typeScale.title,
-    fontWeight: '800',
-  },
-  sectionHeader: {
-    marginBottom: spacing.xs,
-  },
-  sectionTitle: {
-    color: colors.text,
-    fontSize: typeScale.title,
-    fontWeight: '800',
-  },
-  statCard: {
-    backgroundColor: colors.surfaceStrong,
-    borderRadius: radii.md,
-    flex: 1,
-    minHeight: 88,
-    padding: spacing.md,
-  },
-  statLabel: {
-    color: colors.textMuted,
-    fontSize: typeScale.caption,
-    fontWeight: '700',
-  },
-  statValue: {
-    color: colors.text,
-    fontSize: 22,
-    fontWeight: '800',
-    marginBottom: spacing.xs,
-  },
-  statsRow: {
-    flexDirection: 'row',
-    gap: spacing.md,
-    marginBottom: spacing.lg,
-  },
-  summaryCard: {
-    backgroundColor: colors.overlay,
-    borderColor: colors.border,
-    borderRadius: radii.lg,
-    borderWidth: 1,
-    padding: spacing.lg,
-  },
-  summaryDot: {
-    backgroundColor: colors.mint,
-    borderRadius: 999,
-    height: 10,
-    marginTop: 6,
-    width: 10,
-  },
-  summaryRow: {
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-    gap: spacing.sm,
-    marginBottom: spacing.sm,
-  },
-  summaryText: {
-    color: colors.textSoft,
-    flex: 1,
-    fontSize: typeScale.body,
-    lineHeight: 22,
-  },
-  textRtl: {
-    textAlign: 'right',
-    writingDirection: 'rtl',
-  },
-  title: {
-    color: colors.text,
-    fontSize: typeScale.hero,
-    fontWeight: '800',
-    letterSpacing: -1.1,
-    marginBottom: spacing.sm,
-  },
-});
+const getStyles = (colors: Palette) =>
+  StyleSheet.create({
+    conciergeBody: {
+      color: colors.textMuted,
+      fontSize: typeScale.body,
+      lineHeight: 23,
+    },
+    conciergeCard: {
+      ...shadows,
+      backgroundColor: colors.overlay,
+      borderColor: colors.border,
+      borderRadius: radii.lg,
+      borderWidth: 1,
+      marginTop: spacing.sm,
+      padding: spacing.lg,
+    },
+    conciergeTitle: {
+      color: colors.text,
+      fontSize: typeScale.subtitle,
+      fontWeight: '800',
+      marginBottom: spacing.sm,
+    },
+    content: {
+      gap: spacing.lg,
+      paddingTop: spacing.xl,
+    },
+    description: {
+      color: colors.textMuted,
+      fontSize: typeScale.body,
+      lineHeight: 23,
+    },
+    eyebrow: {
+      color: colors.mint,
+      fontSize: typeScale.caption,
+      fontWeight: '800',
+      letterSpacing: 1,
+      marginBottom: spacing.xs,
+      textTransform: 'uppercase',
+    },
+    flexAction: {
+      flex: 1,
+    },
+    headerCopy: {
+      flex: 1,
+    },
+    headerRow: {
+      alignItems: 'flex-start',
+      flexDirection: 'row',
+      gap: spacing.md,
+      justifyContent: 'space-between',
+    },
+    heroActions: {
+      flexDirection: 'row',
+      gap: spacing.md,
+    },
+    heroAlias: {
+      color: colors.text,
+      fontSize: 30,
+      fontWeight: '800',
+      letterSpacing: -0.8,
+      marginBottom: spacing.sm,
+    },
+    heroCard: {
+      ...shadows,
+      backgroundColor: colors.surface,
+      borderColor: colors.border,
+      borderRadius: radii.lg,
+      borderWidth: 1,
+      padding: spacing.lg,
+    },
+    photoBadge: {
+      alignSelf: 'flex-start',
+      backgroundColor: colors.scrim,
+      borderColor: 'rgba(255, 255, 255, 0.12)',
+      borderRadius: radii.pill,
+      borderWidth: 1,
+      left: spacing.md,
+      paddingHorizontal: spacing.md,
+      paddingVertical: 8,
+      position: 'absolute',
+      top: spacing.md,
+      zIndex: 2,
+    },
+    photoBadgeLabel: {
+      color: colors.white,
+      fontSize: typeScale.caption,
+      fontWeight: '800',
+    },
+    photoCaption: {
+      backgroundColor: colors.scrim,
+      bottom: 0,
+      left: 0,
+      padding: spacing.md,
+      position: 'absolute',
+      right: 0,
+    },
+    photoCard: {
+      backgroundColor: colors.surfaceMuted,
+      borderColor: colors.border,
+      borderRadius: radii.lg,
+      borderWidth: 1,
+      marginBottom: spacing.lg,
+      overflow: 'hidden',
+    },
+    photoDescription: {
+      color: colors.white,
+      fontSize: typeScale.body,
+      lineHeight: 22,
+      opacity: 0.85,
+    },
+    photoHeadline: {
+      color: colors.white,
+      fontSize: typeScale.subtitle,
+      fontWeight: '800',
+      marginBottom: spacing.xs,
+    },
+    profileImage: {
+      aspectRatio: 1,
+      backgroundColor: colors.surfaceStrong,
+      maxHeight: 300,
+      width: '100%',
+    },
+    heroMeta: {
+      color: colors.textMuted,
+      fontSize: typeScale.body,
+      lineHeight: 22,
+      marginBottom: spacing.lg,
+    },
+    matchActions: {
+      flexDirection: 'row',
+      gap: spacing.md,
+    },
+    matchAlias: {
+      color: colors.text,
+      fontSize: typeScale.title,
+      fontWeight: '800',
+    },
+    matchArea: {
+      color: colors.textMuted,
+      fontSize: typeScale.caption,
+      fontWeight: '700',
+      marginTop: 4,
+    },
+    matchCard: {
+      ...shadows,
+      backgroundColor: colors.overlay,
+      borderColor: colors.border,
+      borderRadius: radii.lg,
+      borderWidth: 1,
+      padding: spacing.lg,
+    },
+    matchList: {
+      gap: spacing.md,
+    },
+    matchNote: {
+      color: colors.textSoft,
+      fontSize: typeScale.body,
+      lineHeight: 22,
+      marginBottom: spacing.lg,
+    },
+    matchTopCopy: {
+      flex: 1,
+    },
+    matchTopRow: {
+      alignItems: 'flex-start',
+      flexDirection: 'row',
+      gap: spacing.md,
+      justifyContent: 'space-between',
+      marginBottom: spacing.md,
+    },
+    reasonLabel: {
+      color: colors.textSoft,
+      fontSize: typeScale.caption,
+      fontWeight: '700',
+    },
+    reasonPill: {
+      backgroundColor: 'rgba(255, 255, 255, 0.06)',
+      borderRadius: radii.pill,
+      marginBottom: spacing.sm,
+      marginRight: spacing.sm,
+      paddingHorizontal: spacing.md,
+      paddingVertical: 8,
+    },
+    reasonWrap: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginBottom: spacing.md,
+    },
+    rowRtl: {
+      flexDirection: 'row-reverse',
+    },
+    scoreBadge: {
+      alignItems: 'center',
+      backgroundColor: colors.accentMuted,
+      borderRadius: radii.md,
+      minWidth: 72,
+      paddingHorizontal: spacing.md,
+      paddingVertical: spacing.sm,
+    },
+    scoreLabel: {
+      color: colors.accent,
+      fontSize: typeScale.caption,
+      fontWeight: '800',
+    },
+    scoreValue: {
+      color: colors.accent,
+      fontSize: typeScale.title,
+      fontWeight: '800',
+    },
+    sectionHeader: {
+      marginBottom: spacing.xs,
+    },
+    sectionTitle: {
+      color: colors.text,
+      fontSize: typeScale.title,
+      fontWeight: '800',
+    },
+    statCard: {
+      backgroundColor: colors.surfaceStrong,
+      borderRadius: radii.md,
+      flex: 1,
+      justifyContent: 'center',
+      minHeight: 64,
+      padding: spacing.md,
+    },
+    statLabel: {
+      color: colors.textMuted,
+      fontSize: typeScale.caption,
+      fontWeight: '700',
+    },
+    statValue: {
+      color: colors.text,
+      fontSize: 20,
+      fontWeight: '800',
+      marginBottom: 2,
+    },
+    statsRow: {
+      flexDirection: 'row',
+      gap: spacing.md,
+      marginBottom: spacing.md,
+    },
+    summaryCard: {
+      backgroundColor: colors.overlay,
+      borderColor: colors.border,
+      borderRadius: radii.lg,
+      borderWidth: 1,
+      padding: spacing.lg,
+    },
+    summaryDot: {
+      backgroundColor: colors.mint,
+      borderRadius: 999,
+      height: 10,
+      marginTop: 6,
+      width: 10,
+    },
+    summaryRow: {
+      alignItems: 'flex-start',
+      flexDirection: 'row',
+      gap: spacing.sm,
+      marginBottom: spacing.sm,
+    },
+    summaryText: {
+      color: colors.textSoft,
+      flex: 1,
+      fontSize: typeScale.body,
+      lineHeight: 22,
+    },
+    textRtl: {
+      textAlign: 'right',
+      writingDirection: 'rtl',
+    },
+    title: {
+      color: colors.text,
+      fontSize: typeScale.hero,
+      fontWeight: '800',
+      letterSpacing: -1.1,
+      marginBottom: spacing.sm,
+    },
+  });

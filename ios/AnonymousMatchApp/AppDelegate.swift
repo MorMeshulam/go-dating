@@ -40,9 +40,13 @@ class ReactNativeDelegate: RCTDefaultReactNativeFactoryDelegate {
 
   override func bundleURL() -> URL? {
 #if DEBUG
-    RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index")
+    // Pin this app's Metro to port 8082 so it never falls back to the default
+    // 8081 (used by the Stampli project). Keeps initial load and in-app reloads
+    // on our own RN 0.86 bundle, avoiding version-mismatch crashes.
+    RCTBundleURLProvider.sharedSettings().jsLocation = "localhost:8082"
+    return RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: "index")
 #else
-    Bundle.main.url(forResource: "main", withExtension: "jsbundle")
+    return Bundle.main.url(forResource: "main", withExtension: "jsbundle")
 #endif
   }
 }

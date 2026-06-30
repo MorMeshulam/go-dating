@@ -33,7 +33,9 @@ export function AppScreen({
       {children}
     </ScrollView>
   ) : (
-    <View style={[styles.staticContent, contentContainerStyle]}>{children}</View>
+    <View style={[styles.staticContent, contentContainerStyle]}>
+      {children}
+    </View>
   );
 
   return (

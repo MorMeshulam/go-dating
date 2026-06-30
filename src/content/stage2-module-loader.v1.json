@@ -1,0 +1,282 @@
+{
+  "version": "1.0.0",
+  "entity": "stage_2_module_loader",
+  "description": {
+    "en": "Loads stage-2 onboarding modules after stage-1 routing assigns a primary profile and secondary trait tags.",
+    "he": "טוען מודולים של אונבורדינג שלב 2 לאחר ששלב 1 משייך פרופיל ראשי ותגיות תכונה משניות."
+  },
+  "sourceQuestionBank": "profile_question_bank.v1",
+  "moduleDefinitions": [
+    {
+      "id": "identity_basics_core",
+      "sectionId": "identity_basics",
+      "label": {
+        "en": "Identity Basics Core",
+        "he": "ליבת פרטי זהות"
+      },
+      "questionIds": ["profile_alias", "age_band", "gender_identity", "self_summary"],
+      "order": 1,
+      "required": true
+    },
+    {
+      "id": "attraction_preferences_core",
+      "sectionId": "attraction_preferences",
+      "label": {
+        "en": "Attraction Preferences Core",
+        "he": "ליבת העדפות משיכה"
+      },
+      "questionIds": ["seeking_genders", "preferred_partner_age_band", "distance_preference"],
+      "order": 2,
+      "required": true
+    },
+    {
+      "id": "relationship_intent_core",
+      "sectionId": "relationship_intent",
+      "label": {
+        "en": "Relationship Intent Core",
+        "he": "ליבת כוונת קשר"
+      },
+      "questionIds": ["relationship_goal", "dating_pace", "emotional_readiness"],
+      "order": 3,
+      "required": true
+    },
+    {
+      "id": "values_and_lifestyle_core",
+      "sectionId": "values_and_lifestyle",
+      "label": {
+        "en": "Values and Lifestyle Core",
+        "he": "ליבת ערכים ואורח חיים"
+      },
+      "questionIds": ["top_values", "lifestyle_rhythm", "children_family_outlook"],
+      "order": 4,
+      "required": false
+    },
+    {
+      "id": "personality_and_communication_core",
+      "sectionId": "personality_and_communication",
+      "label": {
+        "en": "Personality and Communication Core",
+        "he": "ליבת אישיות ותקשורת"
+      },
+      "questionIds": ["conversation_style", "social_energy", "love_language"],
+      "order": 5,
+      "required": false
+    },
+    {
+      "id": "boundaries_and_privacy_core",
+      "sectionId": "boundaries_and_privacy",
+      "label": {
+        "en": "Boundaries and Privacy Core",
+        "he": "ליבת גבולות ופרטיות"
+      },
+      "questionIds": ["hard_boundaries", "privacy_reveal_mode", "public_profile_elements"],
+      "order": 6,
+      "required": false
+    },
+    {
+      "id": "date_preferences_core",
+      "sectionId": "date_preferences",
+      "label": {
+        "en": "Date Preferences Core",
+        "he": "ליבת העדפות לדייט"
+      },
+      "questionIds": ["first_date_style", "date_coordination_preference", "pre_date_message_style"],
+      "order": 7,
+      "required": false
+    },
+    {
+      "id": "trust_and_verification_core",
+      "sectionId": "trust_and_verification",
+      "label": {
+        "en": "Trust and Verification Core",
+        "he": "ליבת אמון ואימות"
+      },
+      "questionIds": ["verification_status_preference", "safety_support_preference"],
+      "order": 8,
+      "required": false
+    }
+  ],
+  "profileModulePlans": [
+    {
+      "profileId": "serious_long_term",
+      "loadModules": [
+        "identity_basics_core",
+        "attraction_preferences_core",
+        "relationship_intent_core",
+        "values_and_lifestyle_core",
+        "personality_and_communication_core",
+        "trust_and_verification_core"
+      ],
+      "priorityQuestionIds": [
+        "relationship_goal",
+        "emotional_readiness",
+        "top_values",
+        "children_family_outlook",
+        "conversation_style",
+        "verification_status_preference"
+      ],
+      "deferQuestionIds": ["love_language", "pre_date_message_style", "pronouns"]
+    },
+    {
+      "profileId": "marriage_minded",
+      "loadModules": [
+        "identity_basics_core",
+        "attraction_preferences_core",
+        "relationship_intent_core",
+        "values_and_lifestyle_core",
+        "trust_and_verification_core"
+      ],
+      "priorityQuestionIds": [
+        "relationship_goal",
+        "children_family_outlook",
+        "top_values",
+        "emotional_readiness",
+        "verification_status_preference"
+      ],
+      "deferQuestionIds": ["love_language", "pre_date_message_style", "social_energy"]
+    },
+    {
+      "profileId": "slow_and_careful",
+      "loadModules": [
+        "identity_basics_core",
+        "attraction_preferences_core",
+        "relationship_intent_core",
+        "boundaries_and_privacy_core",
+        "personality_and_communication_core",
+        "trust_and_verification_core"
+      ],
+      "priorityQuestionIds": [
+        "dating_pace",
+        "emotional_readiness",
+        "hard_boundaries",
+        "privacy_reveal_mode",
+        "conversation_style"
+      ],
+      "deferQuestionIds": ["pre_date_message_style", "love_language", "first_date_style"]
+    },
+    {
+      "profileId": "privacy_first",
+      "loadModules": [
+        "identity_basics_core",
+        "attraction_preferences_core",
+        "boundaries_and_privacy_core",
+        "trust_and_verification_core",
+        "relationship_intent_core"
+      ],
+      "priorityQuestionIds": [
+        "hard_boundaries",
+        "privacy_reveal_mode",
+        "public_profile_elements",
+        "verification_status_preference",
+        "safety_support_preference"
+      ],
+      "deferQuestionIds": ["first_date_style", "pre_date_message_style", "love_language"]
+    },
+    {
+      "profileId": "trust_first",
+      "loadModules": [
+        "identity_basics_core",
+        "attraction_preferences_core",
+        "trust_and_verification_core",
+        "boundaries_and_privacy_core",
+        "relationship_intent_core"
+      ],
+      "priorityQuestionIds": [
+        "verification_status_preference",
+        "safety_support_preference",
+        "hard_boundaries",
+        "privacy_reveal_mode",
+        "emotional_readiness"
+      ],
+      "deferQuestionIds": ["pre_date_message_style", "love_language", "lifestyle_rhythm"]
+    },
+    {
+      "profileId": "concierge_guided",
+      "loadModules": [
+        "identity_basics_core",
+        "attraction_preferences_core",
+        "relationship_intent_core",
+        "date_preferences_core",
+        "trust_and_verification_core",
+        "values_and_lifestyle_core"
+      ],
+      "priorityQuestionIds": [
+        "date_coordination_preference",
+        "first_date_style",
+        "pre_date_message_style",
+        "verification_status_preference",
+        "relationship_goal"
+      ],
+      "deferQuestionIds": ["love_language", "social_energy"]
+    },
+    {
+      "profileId": "exploring_open",
+      "loadModules": [
+        "identity_basics_core",
+        "attraction_preferences_core",
+        "personality_and_communication_core",
+        "date_preferences_core",
+        "relationship_intent_core"
+      ],
+      "priorityQuestionIds": [
+        "relationship_goal",
+        "conversation_style",
+        "first_date_style",
+        "distance_preference",
+        "dating_pace"
+      ],
+      "deferQuestionIds": ["children_family_outlook", "verification_status_preference", "love_language"]
+    },
+    {
+      "profileId": "chemistry_first",
+      "loadModules": [
+        "identity_basics_core",
+        "attraction_preferences_core",
+        "personality_and_communication_core",
+        "date_preferences_core",
+        "relationship_intent_core"
+      ],
+      "priorityQuestionIds": [
+        "seeking_genders",
+        "conversation_style",
+        "first_date_style",
+        "distance_preference",
+        "dating_pace"
+      ],
+      "deferQuestionIds": ["children_family_outlook", "verification_status_preference", "love_language"]
+    }
+  ],
+  "traitTagOverrides": [
+    {
+      "tag": "high_privacy",
+      "promoteQuestionIds": ["hard_boundaries", "privacy_reveal_mode", "public_profile_elements"],
+      "demoteQuestionIds": ["pre_date_message_style"]
+    },
+    {
+      "tag": "high_trust_expectation",
+      "promoteQuestionIds": ["verification_status_preference", "safety_support_preference"],
+      "demoteQuestionIds": []
+    },
+    {
+      "tag": "needs_support",
+      "promoteQuestionIds": ["date_coordination_preference", "safety_support_preference"],
+      "demoteQuestionIds": []
+    },
+    {
+      "tag": "fast_readiness",
+      "promoteQuestionIds": ["first_date_style", "pre_date_message_style"],
+      "demoteQuestionIds": ["privacy_reveal_mode"]
+    },
+    {
+      "tag": "values_led",
+      "promoteQuestionIds": ["top_values", "children_family_outlook"],
+      "demoteQuestionIds": ["first_date_style"]
+    }
+  ],
+  "globalRules": {
+    "alwaysLoadModules": ["identity_basics_core", "attraction_preferences_core"],
+    "maxStage2QuestionsBeforeDeferral": 14,
+    "deferToPostMatchIfVisibilityIs": ["shown_after_mutual_approval"],
+    "keepInternalOnlyQuestionsInMatchingPayload": true
+  }
+}

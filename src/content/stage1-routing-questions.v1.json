@@ -1,0 +1,223 @@
+{
+  "version": "1.0.0",
+  "entity": "stage_1_customer_profile_router",
+  "product": {
+    "name": {
+      "en": "Anonymous Match",
+      "he": "Anonymous Match"
+    },
+    "summary": {
+      "en": "First-stage onboarding router for a premium matchmaking platform powered by AI and human review.",
+      "he": "נתב אונבורדינג בשלב ראשון לפלטפורמת היכרויות פרימיום המונעת על ידי AI ובקרה אנושית."
+    }
+  },
+  "supportedLocales": ["en", "he"],
+  "purpose": "Classify a new member into the right onboarding path before loading the deep questionnaire.",
+  "routingAxes": [
+    "match_eligibility",
+    "relationship_intent",
+    "dating_pace",
+    "privacy_sensitivity",
+    "trust_expectation",
+    "platform_involvement",
+    "compatibility_focus",
+    "emotional_readiness"
+  ],
+  "sections": [
+    {
+      "id": "stage_1_routing",
+      "title": {
+        "en": "Getting to Know You",
+        "he": "מתחילים להכיר אותך"
+      },
+      "description": {
+        "en": "A short first step that helps us personalize your onboarding path.",
+        "he": "שלב קצר ראשון שעוזר לנו להתאים עבורך את מסלול האונבורדינג."
+      }
+    }
+  ],
+  "questions": [
+    {
+      "id": "who_are_you_open_to_meeting",
+      "sectionId": "stage_1_routing",
+      "type": "multi_select",
+      "required": true,
+      "maxSelections": 4,
+      "purpose": "eligibility",
+      "mapsToAxis": "match_eligibility",
+      "matchingWeight": "high",
+      "visibility": "internal_matching_only",
+      "displayOrder": 1,
+      "analyticsKey": "stage1_match_eligibility",
+      "storesTraitTags": ["audience", "orientation_preference"],
+      "prompt": {
+        "en": "Who are you open to meeting here?",
+        "he": "עם מי את/ה פתוח/ה להיפגש כאן?"
+      },
+      "answers": [
+        { "id": "women", "label": { "en": "Women", "he": "נשים" } },
+        { "id": "men", "label": { "en": "Men", "he": "גברים" } },
+        { "id": "non_binary", "label": { "en": "Non-binary people", "he": "א-בינאריים/ות" } },
+        { "id": "genderfluid", "label": { "en": "Genderfluid people", "he": "ג'נדרפלואידים/ות" } },
+        { "id": "open_to_all", "label": { "en": "Open to all", "he": "פתוח/ה לכולם" } }
+      ]
+    },
+    {
+      "id": "what_are_you_looking_for_now",
+      "sectionId": "stage_1_routing",
+      "type": "single_select",
+      "required": true,
+      "purpose": "routing",
+      "mapsToAxis": "relationship_intent",
+      "matchingWeight": "high",
+      "visibility": "shown_before_match",
+      "displayOrder": 2,
+      "analyticsKey": "stage1_relationship_intent",
+      "storesTraitTags": ["intent", "goal_seriousness"],
+      "prompt": {
+        "en": "What are you looking for right now?",
+        "he": "מה את/ה מחפש/ת עכשיו?"
+      },
+      "answers": [
+        { "id": "long_term", "label": { "en": "A long-term relationship", "he": "קשר לטווח ארוך" } },
+        { "id": "marriage_minded", "label": { "en": "A relationship with marriage in mind", "he": "קשר עם כוונה לנישואים" } },
+        { "id": "slow_burn", "label": { "en": "A slow and meaningful connection", "he": "חיבור איטי ומשמעותי" } },
+        { "id": "exploring", "label": { "en": "I'm open and exploring", "he": "אני פתוח/ה ובודק/ת" } },
+        { "id": "guided_matchmaking", "label": { "en": "A guided matchmaking experience", "he": "חוויה עם ליווי שדכן/ית" } }
+      ]
+    },
+    {
+      "id": "what_pace_feels_right",
+      "sectionId": "stage_1_routing",
+      "type": "single_select",
+      "required": true,
+      "purpose": "routing",
+      "mapsToAxis": "dating_pace",
+      "matchingWeight": "high",
+      "visibility": "shown_before_match",
+      "displayOrder": 3,
+      "analyticsKey": "stage1_dating_pace",
+      "storesTraitTags": ["pace"],
+      "prompt": {
+        "en": "What pace feels right for you?",
+        "he": "איזה קצב מרגיש לך נכון?"
+      },
+      "answers": [
+        { "id": "careful", "label": { "en": "Deliberate and careful", "he": "שקול וזהיר" } },
+        { "id": "open_but_careful", "label": { "en": "Open but careful", "he": "פתוח/ה אבל זהיר/ה" } },
+        { "id": "ready_soon", "label": { "en": "Ready to move soon if it feels right", "he": "מוכן/ה להתקדם מהר אם זה מרגיש נכון" } }
+      ]
+    },
+    {
+      "id": "how_private_do_you_want_to_be",
+      "sectionId": "stage_1_routing",
+      "type": "single_select",
+      "required": true,
+      "purpose": "routing",
+      "mapsToAxis": "privacy_sensitivity",
+      "matchingWeight": "high",
+      "visibility": "internal_matching_only",
+      "displayOrder": 4,
+      "analyticsKey": "stage1_privacy_sensitivity",
+      "storesTraitTags": ["privacy"],
+      "prompt": {
+        "en": "How private do you want to stay at the beginning?",
+        "he": "עד כמה תרצה/י לשמור על פרטיות בהתחלה?"
+      },
+      "answers": [
+        { "id": "very_private", "label": { "en": "Very private until mutual approval", "he": "פרטיות מלאה עד אישור הדדי" } },
+        { "id": "balanced_private", "label": { "en": "Private, but open to a few signals", "he": "פרטי/ת, אבל פתוח/ה לכמה סימנים ראשונים" } },
+        { "id": "more_open", "label": { "en": "More open if trust is clear", "he": "יותר פתוח/ה אם יש אמון ברור" } }
+      ]
+    },
+    {
+      "id": "what_level_of_verification_do_you_expect",
+      "sectionId": "stage_1_routing",
+      "type": "single_select",
+      "required": true,
+      "purpose": "routing",
+      "mapsToAxis": "trust_expectation",
+      "matchingWeight": "high",
+      "visibility": "internal_matching_only",
+      "displayOrder": 5,
+      "analyticsKey": "stage1_trust_expectation",
+      "storesTraitTags": ["trust", "safety_expectation"],
+      "prompt": {
+        "en": "What level of verification do you expect from matches?",
+        "he": "איזו רמת אימות את/ה מצפה לקבל מהתאמות?"
+      },
+      "answers": [
+        { "id": "basic", "label": { "en": "Basic photo or video verification", "he": "אימות בסיסי של תמונה או וידאו" } },
+        { "id": "identity_checked", "label": { "en": "Private identity check", "he": "בדיקת זהות פרטית" } },
+        { "id": "human_reviewed", "label": { "en": "Human-reviewed and screened", "he": "נבדק אנושית וסונן" } }
+      ]
+    },
+    {
+      "id": "how_much_help_do_you_want_from_us",
+      "sectionId": "stage_1_routing",
+      "type": "single_select",
+      "required": true,
+      "purpose": "routing",
+      "mapsToAxis": "platform_involvement",
+      "matchingWeight": "medium",
+      "visibility": "internal_matching_only",
+      "displayOrder": 6,
+      "analyticsKey": "stage1_platform_involvement",
+      "storesTraitTags": ["service_level", "platform_role"],
+      "prompt": {
+        "en": "How involved do you want us to be?",
+        "he": "כמה מעורבים תרצה/י שנהיה?"
+      },
+      "answers": [
+        { "id": "light_touch", "label": { "en": "Just make quality introductions", "he": "רק לעשות היכרויות איכותיות" } },
+        { "id": "guided", "label": { "en": "Guide the process when needed", "he": "לכוון את התהליך כשצריך" } },
+        { "id": "concierge", "label": { "en": "Be highly involved and coordinate", "he": "להיות מעורבים מאוד ולתאם" } }
+      ]
+    },
+    {
+      "id": "what_matters_most_in_a_match_first",
+      "sectionId": "stage_1_routing",
+      "type": "single_select",
+      "required": true,
+      "purpose": "routing",
+      "mapsToAxis": "compatibility_focus",
+      "matchingWeight": "medium",
+      "visibility": "internal_matching_only",
+      "displayOrder": 7,
+      "analyticsKey": "stage1_compatibility_focus",
+      "storesTraitTags": ["match_priority"],
+      "prompt": {
+        "en": "What matters most to you first in a match?",
+        "he": "מה הכי חשוב לך קודם בהתאמה?"
+      },
+      "answers": [
+        { "id": "values", "label": { "en": "Shared values", "he": "ערכים משותפים" } },
+        { "id": "attraction", "label": { "en": "Mutual attraction", "he": "משיכה הדדית" } },
+        { "id": "communication", "label": { "en": "Easy communication", "he": "תקשורת קלה" } },
+        { "id": "trust", "label": { "en": "Trust and reliability", "he": "אמון ואמינות" } }
+      ]
+    },
+    {
+      "id": "how_ready_are_you_for_a_real_relationship",
+      "sectionId": "stage_1_routing",
+      "type": "single_select",
+      "required": true,
+      "purpose": "routing",
+      "mapsToAxis": "emotional_readiness",
+      "matchingWeight": "medium",
+      "visibility": "internal_matching_only",
+      "displayOrder": 8,
+      "analyticsKey": "stage1_emotional_readiness",
+      "storesTraitTags": ["readiness"],
+      "prompt": {
+        "en": "How ready do you feel for a real relationship?",
+        "he": "עד כמה את/ה מרגיש/ה מוכן/ה לקשר אמיתי?"
+      },
+      "answers": [
+        { "id": "ready_now", "label": { "en": "Ready now", "he": "מוכן/ה עכשיו" } },
+        { "id": "warming_up", "label": { "en": "Open and warming up", "he": "פתוח/ה ונכנס/ת לזה" } },
+        { "id": "slow_reentry", "label": { "en": "I prefer a slow re-entry", "he": "מעדיפ/ה חזרה איטית" } }
+      ]
+    }
+  ]
+}

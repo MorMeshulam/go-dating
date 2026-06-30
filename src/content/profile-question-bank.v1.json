@@ -1184,14 +1184,26 @@
         "minLength": 80,
         "maxLength": 320
       },
-      "exampleAnswers": [
+      "examples": [
         {
-          "locale": "en",
-          "value": "I am thoughtful, relationship-minded, and happiest when conversation feels honest, calm, and a little playful."
+          "en": "Product designer by day, stubborn baker by night. I served in 8200, studied design at Bezalel, and I'm happiest on a long trail run or hosting friends for a slow Friday dinner. Looking for someone curious, kind, and quick to laugh.",
+          "he": "מעצבת מוצר ביום, אופה עקשנית בלילה. שירתתי ב-8200, למדתי עיצוב בבצלאל, והכי מאושרת בריצת שטח ארוכה או באירוח חברים לארוחת שישי איטית. מחפשת מישהו סקרן, טוב לב, וקל לצחוק איתו."
         },
         {
-          "locale": "he",
-          "value": "אני אדם/אישה מחושב/ת שמחפש/ת קשר אמיתי, ומרגיש/ה הכי בנוח כשיש שיחה כנה, רגועה וקצת שובבה."
+          "en": "I was a combat medic, and now I'm in my third year of medical school. I surf at dawn when I can, play guitar badly but happily, and love road trips with no real plan. Family matters to me, and I'm looking for something honest and lasting.",
+          "he": "הייתי חובש קרבי, והיום אני בשנה שלישית בלימודי רפואה. גולש עם הזריחה כשמתאפשר, מנגן בגיטרה גרוע אבל בשמחה, ואוהב טיולים בלי תוכנית. משפחה חשובה לי, ואני מחפש משהו כן ומתמשך."
+        },
+        {
+          "en": "After the army I backpacked across South America for eight months, then came home to teach high-school history. I read too much, hike every weekend, and think the best conversations happen over good coffee. Warm, direct, and ready for something real.",
+          "he": "אחרי הצבא טיילתי בדרום אמריקה שמונה חודשים, ואז חזרתי ללמד היסטוריה בתיכון. קוראת יותר מדי, עושה טיולים בכל סוף שבוע, וחושבת שהשיחות הכי טובות קורות מעל קפה טוב. חמה, ישירה, ומוכנה למשהו אמיתי."
+        },
+        {
+          "en": "Software engineer who grew up in Haifa. I served as a paratrooper, studied computer science in Be'er Sheva, and spend my free time bouldering or hunting for the city's best jazz bars. I value calm honesty and someone with a world of their own.",
+          "he": "מהנדס תוכנה שגדל בחיפה. שירתתי כצנחן, למדתי מדעי המחשב בבאר שבע, ובזמן הפנוי מטפס בולדר או מחפש את בארי הג'אז הכי טובים בעיר. מעריך כנות רגועה ומישהי עם עולם משלה."
+        },
+        {
+          "en": "Pediatric nurse with a rescue dog named Pixel. I served in Nahal, have danced since I was six, and still take a class whenever I can. I love farmers' markets, sea swims, and gentle people who know what they want. Hoping to build something steady.",
+          "he": "אחות ילדים עם כלבה מאומצת בשם פיקסל. שירתתי בנחל, רוקדת מגיל שש, ועדיין הולכת לשיעור כשאפשר. אוהבת שווקים, שחייה בים, ואנשים עדינים שיודעים מה הם רוצים. מקווה לבנות משהו יציב."
         }
       ]
     }

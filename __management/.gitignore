@@ -1,0 +1,7 @@
+node_modules
+dist
+build
+.mongo
+.env
+src/payload-types.ts
+npm-debug.log*

@@ -4,6 +4,7 @@ export const copy = {
       'Pick the language once at the start, then continue through login, profile creation, and matching in that language.',
     note: 'You can always add a settings-based language change later, but it will not live as a constant toggle on every screen.',
     title: 'Choose your language / בחרו שפה',
+    themeLabel: 'Theme / ערכת צבעים',
   },
   appName: {
     en: 'GoDating',
@@ -118,6 +119,18 @@ export const copy = {
       en: 'Section',
       he: 'קטגוריה',
     },
+    stageRouting: {
+      en: 'Step 1 · Getting to know you',
+      he: 'שלב 1 · מתחילים להכיר',
+    },
+    stageProfile: {
+      en: 'Step 2 · Your profile',
+      he: 'שלב 2 · הפרופיל שלך',
+    },
+    routedToLabel: {
+      en: 'Personalized path',
+      he: 'מסלול מותאם',
+    },
     answersSummary: {
       en: 'Your answers will power matching, human review, and staged reveal rules.',
       he: 'התשובות שלך יפעילו את מנוע ההתאמה, את הבקרה האנושית ואת כללי החשיפה המדורגת.',
@@ -125,6 +138,98 @@ export const copy = {
     placeholderLongText: {
       en: 'Write something authentic, warm, and clear...',
       he: 'כתבו משהו אותנטי, חם וברור...',
+    },
+    exampleHint: {
+      en: 'Example',
+      he: 'דוגמה',
+    },
+    nextExample: {
+      en: 'Another example →',
+      he: '← דוגמה נוספת',
+    },
+    impact: {
+      high: {
+        en: 'Key for matching',
+        he: 'קריטי להתאמה',
+      },
+      medium: {
+        en: 'Shapes your matches',
+        he: 'מעצב את ההתאמות שלך',
+      },
+      low: {
+        en: 'Adds a little color',
+        he: 'מוסיף קצת צבע',
+      },
+    },
+    milestone: {
+      routedEyebrow: {
+        en: 'Step 1 complete',
+        he: 'שלב 1 הושלם',
+      },
+      routedTitle: {
+        en: 'We found your path',
+        he: 'מצאנו את המסלול שלך',
+      },
+      routedBody: {
+        en: 'Your answers shaped a profile journey made for you. Next, a few questions tuned to how you date.',
+        he: 'התשובות שלך עיצבו מסלול פרופיל שמתאים בדיוק לך. בהמשך, כמה שאלות מותאמות לאופן שבו את/ה יוצא/ת לדייטים.',
+      },
+      doneEyebrow: {
+        en: 'Profile ready',
+        he: 'הפרופיל מוכן',
+      },
+      doneTitle: {
+        en: "You're all set",
+        he: 'הכול מוכן',
+      },
+      doneBody: {
+        en: 'Your profile is ready for AI and human matchmakers to start finding meaningful introductions.',
+        he: 'הפרופיל שלך מוכן כדי ש-AI ושדכנים אנושיים יתחילו למצוא היכרויות משמעותיות.',
+      },
+      seeProfile: {
+        en: 'See my profile',
+        he: 'לפרופיל שלי',
+      },
+    },
+    verification: {
+      needsTitle: {
+        en: "Let's polish your story",
+        he: 'בואו נשפר את הסיפור',
+      },
+      attempt: {
+        en: 'Attempt',
+        he: 'ניסיון',
+      },
+      blockedTitle: {
+        en: 'Sent for expert review',
+        he: 'נשלח לבדיקת מומחה',
+      },
+      blockedBody: {
+        en: 'Thanks for trying. Our team will review your description and reach out — you can continue once it’s approved.',
+        he: 'תודה. הצוות שלנו יבדוק את התיאור ויחזור אליך — אפשר להמשיך לאחר האישור.',
+      },
+      issues: {
+        gibberish: {
+          en: 'This doesn’t read like a real description yet — write a genuine few lines about you.',
+          he: 'זה עדיין לא נראה כמו תיאור אמיתי — כתבו כמה שורות אמיתיות עליכם.',
+        },
+        too_few_words: {
+          en: 'Add a few more words so matchmakers get a real sense of you.',
+          he: 'הוסיפו עוד כמה מילים כדי שנבין אתכם באמת.',
+        },
+        too_short: {
+          en: 'A little more, please — aim for a couple of real sentences.',
+          he: 'עוד קצת בבקשה — כדאי כמה משפטים אמיתיים.',
+        },
+        low_variety: {
+          en: 'This looks repetitive — tell us something specific about you.',
+          he: 'זה נראה חזרתי — ספרו משהו ספציפי עליכם.',
+        },
+        too_long: {
+          en: 'A bit long — trim it to keep the story focused.',
+          he: 'קצת ארוך — קצרו כדי לשמור על מיקוד.',
+        },
+      },
     },
   },
   home: {
