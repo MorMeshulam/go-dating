@@ -14,14 +14,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '../../components/ui/Button';
 import { useAuth } from '../../state/auth/AuthContext';
 import { useAppPreferences } from '../../state/preferences/AppPreferencesContext';
-import { colors, radii, shadows, spacing, typeScale } from '../../theme';
+import { colors, radii, spacing, typeScale } from '../../theme';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const CARD_GAP = 14;
 const CARD_WIDTH = SCREEN_WIDTH - 72;
 const SIDE_PADDING = (SCREEN_WIDTH - CARD_WIDTH) / 2 - CARD_GAP / 2;
 const SNAP_INTERVAL = CARD_WIDTH + CARD_GAP;
-const CARD_HEIGHT = 292;
+const CARD_HEIGHT = 360;
 
 type Locale = 'en' | 'he';
 type T = { en: string; he: string };
@@ -32,7 +32,7 @@ type PricingTier = {
   label: T;
   price: string;
   period: T;
-  description: T;
+  features: T[];
   accent: string;
   badge?: T;
 };
@@ -44,23 +44,25 @@ const TIERS: PricingTier[] = [
     label: { en: 'Free', he: 'חינם' },
     price: '₪0',
     period: { en: 'forever', he: 'לתמיד' },
-    description: {
-      en: 'Acquisition funnel and habit formation.',
-      he: 'כניסה לפלטפורמה וחיבור ראשוני.',
-    },
-    accent: '#A9C2D0',
+    features: [
+      { en: 'Browse profiles & photos', he: 'עיון בפרופילים ותמונות' },
+      { en: 'Basic compatibility matching', he: 'התאמה בסיסית' },
+      { en: '5 mutual likes per day', he: '5 לייקים ביום' },
+    ],
+    accent: '#3D85A8',
   },
   {
     id: 'premium',
     icon: '✨',
     label: { en: 'Premium', he: 'פרמיום' },
     price: '₪49–79',
-    period: { en: 'per month', he: 'לחודש' },
-    description: {
-      en: 'First paid tier for quality filters and better access.',
-      he: 'שכבת תשלום ראשונה לסינון איכות וגישה משופרת.',
-    },
-    accent: '#FF5CA8',
+    period: { en: '/ month', he: '/ חודש' },
+    features: [
+      { en: 'Unlimited daily likes', he: 'לייקים ללא הגבלה' },
+      { en: 'See who liked your profile', he: 'ראו מי אהב אתכם' },
+      { en: 'Priority in search results', he: 'עדיפות בתוצאות חיפוש' },
+    ],
+    accent: '#D42860',
     badge: { en: 'Most Popular', he: 'הפופולרי ביותר' },
   },
   {
@@ -68,24 +70,26 @@ const TIERS: PricingTier[] = [
     icon: '🎯',
     label: { en: 'Matchmaker', he: 'שדכן' },
     price: '₪149–249',
-    period: { en: 'per month', he: 'לחודש' },
-    description: {
-      en: 'Hybrid expert-assisted experience.',
-      he: 'חוויה היברידית בסיוע מומחים אנושיים.',
-    },
-    accent: '#B388FF',
+    period: { en: '/ month', he: '/ חודש' },
+    features: [
+      { en: 'Curated matches every week', he: 'התאמות שבועיות מאצות' },
+      { en: 'Human expert guidance', he: 'ליווי מומחה אנושי' },
+      { en: 'Personal profile coaching', he: 'אימון פרופיל אישי' },
+    ],
+    accent: '#7C4FD4',
   },
   {
     id: 'vip',
     icon: '👑',
     label: { en: 'VIP', he: 'VIP' },
     price: '₪499–999',
-    period: { en: 'per month', he: 'לחודש' },
-    description: {
-      en: 'High-touch premium service with strongest margins.',
-      he: 'שירות פרמיום אינטנסיבי עם מרווחים הגבוהים ביותר.',
-    },
-    accent: '#FFD27D',
+    period: { en: '/ month', he: '/ חודש' },
+    features: [
+      { en: 'Dedicated personal matchmaker', he: 'שדכן אישי ייעודי' },
+      { en: 'Background-verified profiles', he: 'פרופילים עם בדיקת רקע' },
+      { en: 'Exclusive member-only events', he: 'אירועי VIP בלעדיים' },
+    ],
+    accent: '#A07010',
   },
 ];
 
@@ -117,7 +121,7 @@ export function PricingCarouselScreen() {
       </View>
 
       <SafeAreaView edges={['top', 'bottom', 'left', 'right']} style={styles.safe}>
-        {/* ── Header ── */}
+        {/* Header */}
         <View style={styles.header}>
           <View style={styles.pill}>
             <Text style={styles.pillText}>
@@ -126,17 +130,17 @@ export function PricingCarouselScreen() {
           </View>
           <Text style={[styles.heroTitle, isRTL && styles.rtl]}>
             {locale === 'he'
-              ? 'מונטיזציה מרובת שכבות\nעם פוטנציאל פרמיום'
-              : 'Multi-tier monetization\nwith premium upside'}
+              ? 'הצטרפו לחוויה\nשמשנה זוגיות'
+              : 'Upgrade your dating\nexperience'}
           </Text>
           <Text style={[styles.heroSub, isRTL && styles.rtl]}>
             {locale === 'he'
-              ? 'גלשו ימינה לצפייה בכל תוכניות המנוי'
+              ? 'גלשו לגלות את כל תוכניות המנוי'
               : 'Swipe to explore all subscription tiers'}
           </Text>
         </View>
 
-        {/* ── Carousel ── */}
+        {/* Carousel */}
         <FlatList
           ref={listRef}
           data={TIERS}
@@ -164,7 +168,7 @@ export function PricingCarouselScreen() {
           )}
         />
 
-        {/* ── Dots ── */}
+        {/* Dots */}
         <View style={styles.dots}>
           {TIERS.map((tier, i) => (
             <View
@@ -173,36 +177,14 @@ export function PricingCarouselScreen() {
                 styles.dot,
                 i === activeIndex && {
                   backgroundColor: active.accent,
-                  width: 22,
+                  width: 24,
                 },
               ]}
             />
           ))}
         </View>
 
-        {/* ── Alt model row ── */}
-        <View style={styles.altCard}>
-          <Text style={[styles.altEyebrow, isRTL && styles.rtl]}>
-            {locale === 'he' ? 'מודל חלופי' : 'Alternative model'}
-          </Text>
-          <View style={[styles.altRow, isRTL && styles.rowRtl]}>
-            <View style={styles.altItem}>
-              <Text style={[styles.altLabel, isRTL && styles.rtl]}>
-                {locale === 'he' ? 'תשלום להתאמה' : 'Pay-per-match'}
-              </Text>
-              <Text style={[styles.altPrice, { color: colors.accent }]}>₪19–39</Text>
-            </View>
-            <View style={styles.altDivider} />
-            <View style={styles.altItem}>
-              <Text style={[styles.altLabel, isRTL && styles.rtl]}>
-                {locale === 'he' ? 'פתיחת שיחה' : 'Conversation unlock'}
-              </Text>
-              <Text style={[styles.altPrice, { color: colors.accentStrong }]}>₪9–19</Text>
-            </View>
-          </View>
-        </View>
-
-        {/* ── CTAs ── */}
+        {/* CTAs */}
         <View style={styles.cta}>
           <Button
             label={
@@ -237,68 +219,80 @@ function PricingCard({
   const loc = (t: T) => t[locale];
 
   return (
+    // Outer shell: provides shadow + border + scale/opacity
     <View
       style={[
-        styles.card,
+        styles.cardShell,
         {
-          borderColor: isActive ? tier.accent + '90' : colors.border,
+          borderColor: isActive ? tier.accent + 'B0' : 'rgba(160,55,90,0.10)',
           borderWidth: isActive ? 1.5 : 1,
           transform: [{ scale: isActive ? 1 : 0.93 }],
-          opacity: isActive ? 1 : 0.58,
+          opacity: isActive ? 1 : 0.52,
         },
+        isActive && accentShadow(tier.accent),
       ]}
     >
-      {/* Colored top strip */}
-      <View
-        style={[
-          styles.topStrip,
-          { backgroundColor: tier.accent },
-          isActive && { height: 5 },
-        ]}
-      />
+      {/* Inner: overflow:hidden clips header to card border-radius */}
+      <View style={styles.cardInner}>
+        {/* Accent header band */}
+        <View style={[styles.cardHeader, { backgroundColor: tier.accent }]}>
+          {/* Decorative background layer */}
+          <View style={styles.headerOrbLarge} />
+          <View style={styles.headerOrbSmall} />
+          <Text style={styles.headerGhost} pointerEvents="none">{tier.icon}</Text>
 
-      {/* Badge */}
-      {tier.badge ? (
-        <View
-          style={[
-            styles.badge,
-            {
-              backgroundColor: tier.accent + '1A',
-              borderColor: tier.accent + '55',
-            },
-          ]}
-        >
-          <Text style={[styles.badgeText, { color: tier.accent }]}>
-            {loc(tier.badge)}
+          {/* Badge row – always rendered so cards stay aligned */}
+          <View style={[styles.badgeRow, isRTL && styles.badgeRowRtl]}>
+            {tier.badge ? (
+              <View style={styles.badge}>
+                <Text style={styles.badgeText}>{loc(tier.badge)}</Text>
+              </View>
+            ) : null}
+          </View>
+
+          <Text style={styles.tierIcon}>{tier.icon}</Text>
+          <Text style={[styles.tierLabel, isRTL && styles.rtl]}>
+            {loc(tier.label)}
           </Text>
         </View>
-      ) : (
-        <View style={styles.badgeSpacer} />
-      )}
 
-      <Text style={styles.tierIcon}>{tier.icon}</Text>
+        {/* White body */}
+        <View style={styles.cardBody}>
+          <View style={[styles.priceRow, isRTL && styles.rowRtl]}>
+            <Text style={styles.tierPrice}>{tier.price}</Text>
+            <Text style={styles.tierPeriod}>{loc(tier.period)}</Text>
+          </View>
 
-      <Text
-        style={[styles.tierLabel, { color: tier.accent }, isRTL && styles.rtl]}
-      >
-        {loc(tier.label)}
-      </Text>
-
-      <View
-        style={[
-          styles.priceRow,
-          isRTL && styles.rowRtl,
-        ]}
-      >
-        <Text style={styles.tierPrice}>{tier.price}</Text>
-        <Text style={styles.tierPeriod}> / {loc(tier.period)}</Text>
+          <View style={styles.featureList}>
+            {tier.features.map((feature, i) => (
+              <View key={i} style={[styles.featureRow, isRTL && styles.rowRtl]}>
+                <Text style={[styles.checkmark, { color: tier.accent }]}>✓</Text>
+                <Text style={[styles.featureText, isRTL && styles.rtl]}>
+                  {loc(feature)}
+                </Text>
+              </View>
+            ))}
+          </View>
+        </View>
       </View>
-
-      <Text style={[styles.tierDescription, isRTL && styles.rtl]}>
-        {loc(tier.description)}
-      </Text>
     </View>
   );
+}
+
+function accentShadow(accent: string) {
+  const hex = accent.replace('#', '');
+  const r = parseInt(hex.slice(0, 2), 16);
+  const g = parseInt(hex.slice(2, 4), 16);
+  const b = parseInt(hex.slice(4, 6), 16);
+  return Platform.select({
+    ios: {
+      shadowColor: `rgb(${r},${g},${b})`,
+      shadowOffset: { width: 0, height: 10 },
+      shadowOpacity: 0.28,
+      shadowRadius: 22,
+    },
+    android: { elevation: 10 },
+  });
 }
 
 const styles = StyleSheet.create({
@@ -307,11 +301,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  // ── Orbs ──
-  orb: {
-    borderRadius: 999,
-    position: 'absolute',
-  },
+  orb: { borderRadius: 999, position: 'absolute' },
   orbPink: {
     backgroundColor: 'rgba(224, 84, 124, 0.13)',
     height: 340,
@@ -334,15 +324,11 @@ const styles = StyleSheet.create({
     width: 220,
   },
 
-  // ── Layout ──
-  safe: {
-    flex: 1,
-  },
+  safe: { flex: 1 },
 
-  // ── Header ──
   header: {
     alignItems: 'center',
-    paddingBottom: spacing.lg,
+    paddingBottom: spacing.sm,
     paddingHorizontal: spacing.xl,
     paddingTop: spacing.md,
   },
@@ -351,7 +337,7 @@ const styles = StyleSheet.create({
     borderColor: colors.border,
     borderRadius: radii.pill,
     borderWidth: 1,
-    marginBottom: spacing.md,
+    marginBottom: spacing.sm,
     paddingHorizontal: spacing.md,
     paddingVertical: 6,
   },
@@ -364,10 +350,10 @@ const styles = StyleSheet.create({
   },
   heroTitle: {
     color: colors.text,
-    fontSize: 27,
+    fontSize: 26,
     fontWeight: '800',
-    letterSpacing: -0.7,
-    lineHeight: 34,
+    letterSpacing: -0.6,
+    lineHeight: 33,
     marginBottom: spacing.xs,
     textAlign: 'center',
   },
@@ -377,93 +363,152 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  // ── Card ──
-  card: {
+  // Card shell: carries shadow + border (no overflow:hidden)
+  cardShell: {
+    borderRadius: radii.lg,
+    height: CARD_HEIGHT,
+    width: CARD_WIDTH,
     ...Platform.select({
       ios: {
         shadowColor: '#2D1810',
-        shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 0.12,
-        shadowRadius: 20,
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.10,
+        shadowRadius: 18,
       },
       android: { elevation: 4 },
     }),
-    backgroundColor: colors.surface,
-    borderRadius: radii.lg,
-    height: CARD_HEIGHT,
-    overflow: 'hidden',
-    padding: spacing.xl,
-    width: CARD_WIDTH,
   },
-  topStrip: {
-    height: 4,
-    left: 0,
+  // Card inner: clips header to rounded corners
+  cardInner: {
+    borderRadius: radii.lg,
+    flex: 1,
+    overflow: 'hidden',
+  },
+  cardHeader: {
+    overflow: 'hidden',
+    paddingBottom: spacing.md,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.sm,
+  },
+  headerOrbLarge: {
+    backgroundColor: 'rgba(255,255,255,0.13)',
+    borderRadius: 999,
+    height: 130,
     position: 'absolute',
-    right: 0,
-    top: 0,
+    right: -28,
+    top: -28,
+    width: 130,
+  },
+  headerOrbSmall: {
+    backgroundColor: 'rgba(255,255,255,0.08)',
+    borderRadius: 999,
+    height: 72,
+    position: 'absolute',
+    bottom: -20,
+    left: 24,
+    width: 72,
+  },
+  headerGhost: {
+    fontSize: 96,
+    lineHeight: 100,
+    opacity: 0.11,
+    position: 'absolute',
+    right: 10,
+    bottom: 4,
+  },
+  badgeRow: {
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+    height: 26,
+    justifyContent: 'flex-end',
+    marginBottom: spacing.xs,
+  },
+  badgeRowRtl: {
+    justifyContent: 'flex-start',
   },
   badge: {
-    alignSelf: 'flex-start',
+    backgroundColor: 'rgba(255,255,255,0.22)',
+    borderColor: 'rgba(255,255,255,0.40)',
     borderRadius: radii.pill,
     borderWidth: 1,
-    paddingHorizontal: spacing.sm,
+    paddingHorizontal: 10,
     paddingVertical: 3,
   },
-  badgeSpacer: {
-    height: 22,
-  },
   badgeText: {
+    color: '#FFFFFF',
     fontSize: 10,
     fontWeight: '800',
-    letterSpacing: 0.6,
+    letterSpacing: 0.5,
     textTransform: 'uppercase',
   },
   tierIcon: {
-    fontSize: 34,
-    marginBottom: 6,
-    marginTop: spacing.xs,
+    fontSize: 38,
+    lineHeight: 46,
+    marginBottom: 4,
   },
   tierLabel: {
+    color: 'rgba(255,255,255,0.92)',
     fontSize: typeScale.caption,
     fontWeight: '800',
-    letterSpacing: 1.2,
-    marginBottom: 4,
+    letterSpacing: 1.4,
     textTransform: 'uppercase',
+  },
+
+  cardBody: {
+    backgroundColor: colors.surface,
+    flex: 1,
+    paddingHorizontal: spacing.lg,
+    paddingTop: spacing.md,
+    paddingBottom: spacing.md,
   },
   priceRow: {
     alignItems: 'baseline',
     flexDirection: 'row',
-    marginBottom: spacing.sm,
+    gap: spacing.xs,
+    marginBottom: spacing.md,
   },
-  rowRtl: {
-    flexDirection: 'row-reverse',
-  },
+  rowRtl: { flexDirection: 'row-reverse' },
   tierPrice: {
     color: colors.text,
-    fontSize: 40,
+    fontSize: 34,
     fontWeight: '900',
-    letterSpacing: -1.2,
-    lineHeight: 44,
+    letterSpacing: -1,
+    lineHeight: 38,
   },
   tierPeriod: {
     color: colors.textMuted,
     fontSize: typeScale.body,
     fontWeight: '500',
   },
-  tierDescription: {
-    color: colors.textMuted,
-    fontSize: typeScale.body,
-    lineHeight: 22,
+  featureList: {
+    gap: spacing.xs,
+  },
+  featureRow: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    gap: 8,
+  },
+  checkmark: {
+    fontSize: 13,
+    fontWeight: '900',
+    lineHeight: 20,
+    marginTop: 1,
+  },
+  featureText: {
+    color: colors.textSoft,
+    flex: 1,
+    fontSize: 13,
+    fontWeight: '500',
+    lineHeight: 20,
   },
 
-  // ── Dots ──
   dots: {
     alignItems: 'center',
     flexDirection: 'row',
     gap: spacing.xs,
     justifyContent: 'center',
-    marginBottom: spacing.md,
-    marginTop: spacing.lg,
+    marginBottom: spacing.sm,
+    marginTop: spacing.md,
   },
   dot: {
     backgroundColor: colors.dotInactive,
@@ -472,65 +517,11 @@ const styles = StyleSheet.create({
     width: 8,
   },
 
-  // ── Alt model ──
-  altCard: {
-    ...Platform.select({
-      ios: {
-        shadowColor: '#2D1810',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.10,
-        shadowRadius: 12,
-      },
-      android: { elevation: 3 },
-    }),
-    backgroundColor: colors.overlay,
-    borderColor: colors.border,
-    borderRadius: radii.md,
-    borderWidth: 1,
-    marginBottom: spacing.md,
-    marginHorizontal: spacing.xl,
-    padding: spacing.md,
-  },
-  altEyebrow: {
-    color: colors.textMuted,
-    fontSize: typeScale.caption,
-    fontWeight: '700',
-    letterSpacing: 0.9,
-    marginBottom: spacing.sm,
-    textTransform: 'uppercase',
-  },
-  altRow: {
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  altItem: {
-    alignItems: 'center',
-    flex: 1,
-  },
-  altLabel: {
-    color: colors.textMuted,
-    fontSize: 12,
-    marginBottom: 3,
-    textAlign: 'center',
-  },
-  altPrice: {
-    fontSize: typeScale.title,
-    fontWeight: '800',
-    letterSpacing: -0.5,
-  },
-  altDivider: {
-    backgroundColor: colors.border,
-    height: 44,
-    width: 1,
-  },
-
-  // ── CTAs ──
   cta: {
     gap: spacing.xs,
     paddingHorizontal: spacing.xl,
   },
 
-  // ── RTL ──
   rtl: {
     textAlign: 'right',
     writingDirection: 'rtl',
